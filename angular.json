@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "guiYDEApp"
+    }
+  },
+  "defaultProject": "guiYDEApp",
+  "cli": {
+    "analytics": "97ee088c-ef8b-4b4d-b032-a0e05d33a72c"
+  }
 }
