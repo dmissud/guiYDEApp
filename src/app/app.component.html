@@ -1,15 +1,34 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h2>YDEApp: une cartographie de vos applications</h2>
-      <p>Mis à jour : {{ lastUpdate | async | date: 'EEEE d MMMM yyyy' | lowercase }}</p>
-      <ul class="list-group">
-        <app-my-posts *ngFor="let post of posts"
-                      [postTitle]="post.title"
-                      [postContent]="post.content"
-                      [postDateCreate]="post.dateCreation"
-                      [postNbClick]="post.nbClick"></app-my-posts>
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="#">YDEApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <p-tieredMenu [showTransitionOptions]="'30ms'" [hideTransitionOptions]="'30ms'" #menu [model]="items" [popup]="true"></p-tieredMenu>
+          <button #btn type="button" pButton icon="pi pi-fw pi-list" label="Show" (click)="menu.toggle($event)"></button>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">lien utiles</a>
+        </li>
       </ul>
+      <span class="navbar-text">
+        Tous vos applications, la juste pour <strong>Les Architectes en fleur</strong> !
+    </span>
     </div>
   </div>
-</div>
+</nav>
+</header>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <app-organization-view></app-organization-view>
+      </div>
+    </div>
+  </div>
+</main>

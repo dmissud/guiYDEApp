@@ -28,8 +28,11 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": []
           },
@@ -67,6 +70,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "port": 4201,
+            "host": "0.0.0.0",
             "browserTarget": "guiYDEApp:build"
           },
           "configurations": {
@@ -128,6 +133,6 @@
   },
   "defaultProject": "guiYDEApp",
   "cli": {
-    "analytics": "97ee088c-ef8b-4b4d-b032-a0e05d33a72c"
+    "analytics": "c64589b4-c78c-46c5-8751-04608ca80a92"
   }
 }
