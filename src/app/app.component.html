@@ -1,34 +1,26 @@
-<header>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="#">YDEApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <p-tieredMenu [showTransitionOptions]="'30ms'" [hideTransitionOptions]="'30ms'" #menu [model]="items" [popup]="true"></p-tieredMenu>
-          <button #btn type="button" pButton icon="pi pi-fw pi-list" label="Show" (click)="menu.toggle($event)"></button>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">lien utiles</a>
-        </li>
-      </ul>
-      <span class="navbar-text">
-        Tous vos applications, la juste pour <strong>Les Architectes en fleur</strong> !
-    </span>
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <p-button label="YDEApp" icon="pi"></p-button>
+  </div>
+
+  <div class="p-toolbar-group-right">
+    <p-button icon="pi pi-search"></p-button>
+    <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>
+    <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+  </div>
+</p-toolbar>
+<div class="p-grid p-ai-md-stretch vertical-container">
+  <div class="p-col-2">
+    <div class="box box-stretched">
+      <p-panelMenu [model]="items" ></p-panelMenu>
     </div>
   </div>
-</nav>
-</header>
-<main>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <app-organization-view></app-organization-view>
+  <div class="p-col-10">
+    <p-toolbar>
+      <div class="p-toolbar-group-right">
+        <p-inputSwitch  [(ngModel)]="val"></p-inputSwitch>
       </div>
-    </div>
+    </p-toolbar>
+    <div class="box box-stretched"><app-organization-view [horizontal]="val"></app-organization-view></div>
   </div>
-</main>
+</div>

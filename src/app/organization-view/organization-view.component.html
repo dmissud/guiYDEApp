@@ -1,1 +1,1 @@
-<p-tree [value]="files$ | async" layout="horizontal" selectionMode="single" [(selection)]="selectedFile"></p-tree>
+<p-tree [value]="files$ | async" [layout]="horizontal?'horizontal':'vertical'" selectionMode="single" [(selection)]="selectedFile"></p-tree>
