@@ -25,14 +25,35 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
+              "src/style",
               "src/assets"
             ],
+            "extractCss": true,
             "styles": [
               "./src/styles.scss",
-              "./node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
               "./node_modules/primeng/resources/primeng.min.css",
               "./node_modules/primeflex/primeflex.css",
-              "./node_modules/primeicons/primeicons.css"
+              "./node_modules/primeicons/primeicons.css",
+              {
+                "input": "./node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
+                "inject": false,
+                "bundleName": "bootstrap4-light-blue"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/bootstrap4-light-purple/theme.css",
+                "inject": false,
+                "bundleName": "bootstrap4-light-purple"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/bootstrap4-dark-blue/theme.css",
+                "inject": false,
+                "bundleName": "bootstrap4-dark-blue"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/bootstrap4-dark-purple/theme.css",
+                "inject": false,
+                "bundleName": "bootstrap4-dark-purple"
+              }
             ],
             "scripts": []
           },

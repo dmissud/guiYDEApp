@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TieredMenuModule} from 'primeng/tieredmenu';
+import {MenubarModule} from 'primeng/menubar';
 import {MenuModule} from 'primeng/menu';
 import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
@@ -20,7 +20,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     CommonModule,
     RippleModule,
     ButtonModule,
-    TieredMenuModule,
+    MenubarModule,
     TreeModule,
     ToastModule,
     ButtonModule,
@@ -36,7 +36,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
   exports: [
     RippleModule,
     ButtonModule,
-    TieredMenuModule,
+    MenubarModule,
     TreeModule,
     ToastModule,
     ButtonModule,
