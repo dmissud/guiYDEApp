@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OrganizationViewComponent } from './organization-view.component';
+import {OrganizationViewComponent} from './organization-view.component';
 
 describe('OrganizationViewComponent', () => {
   let component: OrganizationViewComponent;

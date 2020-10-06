@@ -1,0 +1,13 @@
+<div class="p-grid p-ai-md-stretch vertical-container">
+  <div class="p-col-12">
+    <p-toolbar>
+      <div class="p-toolbar-group-right">
+        <p-inputSwitch [(ngModel)]="modeOrganization"></p-inputSwitch>
+      </div>
+    </p-toolbar>
+    <div class="box box-stretched">
+      <app-organization-view [horizontal]="modeOrganization"></app-organization-view>
+    </div>
+  </div>
+</div>
+

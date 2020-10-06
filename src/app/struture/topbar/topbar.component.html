@@ -1,0 +1,17 @@
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <p-menubar [model]="generalItems">
+    </p-menubar>
+  </div>
+  <div class="p-toolbar-group-right p-justify-between" tooltipposition="bottom">
+    <div>
+      <span *ngIf="(user$ | async).isUser()" class="pi yde-theme pi-user"></span>
+      <span *ngIf="(user$ | async).isAdmin()" class="pi yde-theme pi-user-plus"></span>
+    </div>
+    <p-button type="text" (click)="display = true" icon="pi pi-cog"></p-button>
+  </div>
+</p-toolbar>
+<p-sidebar [(visible)]="display" position="right">
+  <app-utils-view></app-utils-view>
+</p-sidebar>
+

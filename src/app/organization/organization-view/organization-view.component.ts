@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NodeService} from '../service/node.service';
+import {NodeService} from '../../service/node.service';
 import {TreeNode} from 'primeng/api';
 import {Observable} from 'rxjs';
 

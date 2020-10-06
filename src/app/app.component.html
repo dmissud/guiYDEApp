@@ -1,13 +1,2 @@
 <app-topbar></app-topbar>
-<div class="p-grid p-ai-md-stretch vertical-container">
-  <div class="p-col-12">
-    <p-toolbar>
-      <div class="p-toolbar-group-right">
-        <p-inputSwitch [(ngModel)]="val"></p-inputSwitch>
-      </div>
-    </p-toolbar>
-    <div class="box box-stretched">
-      <app-organization-view [horizontal]="val"></app-organization-view>
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>

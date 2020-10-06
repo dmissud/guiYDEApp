@@ -13,6 +13,9 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import {PasswordModule} from 'primeng/password';
+import {SlideMenuModule} from 'primeng/slidemenu';
+import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
   declarations: [],
@@ -31,7 +34,10 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     ToolbarModule,
     SplitButtonModule,
     PanelMenuModule,
-    InputSwitchModule
+    InputSwitchModule,
+    PasswordModule,
+    InputTextModule,
+    SlideMenuModule
   ],
   exports: [
     RippleModule,
@@ -47,7 +53,10 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     ToolbarModule,
     SplitButtonModule,
     PanelMenuModule,
-    InputSwitchModule
+    InputSwitchModule,
+    PasswordModule,
+    InputTextModule,
+    SlideMenuModule
   ]
 })
 export class PrimengModule {

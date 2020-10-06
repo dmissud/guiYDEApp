@@ -53,6 +53,26 @@
                 "input": "./node_modules/primeng/resources/themes/bootstrap4-dark-purple/theme.css",
                 "inject": false,
                 "bundleName": "bootstrap4-dark-purple"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/md-dark-deeppurple/theme.css",
+                "inject": false,
+                "bundleName": "md-dark-deeppurple"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/md-dark-indigo/theme.css",
+                "inject": false,
+                "bundleName": "md-dark-indigo"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
+                "inject": false,
+                "bundleName": "md-light-deeppurple"
+              },
+              {
+                "input": "./node_modules/primeng/resources/themes/md-light-indigo/theme.css",
+                "inject": false,
+                "bundleName": "md-light-indigo"
               }
             ],
             "scripts": []
