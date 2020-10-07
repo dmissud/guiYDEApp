@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NodeService} from '../../service/node.service';
+import {OrganizationService} from '../../service/organization.service';
 import {TreeNode} from 'primeng/api';
 import {Observable} from 'rxjs';
 
@@ -11,10 +11,10 @@ import {Observable} from 'rxjs';
 export class OrganizationViewComponent implements OnInit {
   files$: Observable<TreeNode[]>;
 
-  selectedFile: TreeNode;
+  selectedNode: TreeNode;
   @Input() horizontal: boolean;
 
-  constructor(private nodeService: NodeService) {
+  constructor(private nodeService: OrganizationService) {
   }
 
   ngOnInit(): void {

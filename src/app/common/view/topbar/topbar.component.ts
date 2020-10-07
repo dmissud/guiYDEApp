@@ -68,10 +68,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
       label: 'Utilisateur',
       icon: 'pi pi-fw pi-users',
       visible: isAdmin,
-      items: [
-        {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-        {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-      ]
+      routerLink: '/users'
     };
     this.refiItems = {
       label: 'Importation REFi',

@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable()
-export class NodeService {
+export class OrganizationService {
 
   organizationsSubject = new BehaviorSubject([]);
   private organizationsUrl = 'http://localhost:9090/api/V1/organizations/10000000';

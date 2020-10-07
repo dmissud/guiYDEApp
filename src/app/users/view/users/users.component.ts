@@ -1,17 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from '../common/service/auth.service';
-import {Router} from '@angular/router';
-import {MessageService} from 'primeng/api';
 import {Observable, Subscription} from 'rxjs';
-import {User} from '../common/model/User';
+import {User} from '../../../common/model/User';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../common/service/auth.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
-  selector: 'app-refi-flux',
-  templateUrl: './refi-flux.component.html',
-  styleUrls: ['./refi-flux.component.scss']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss']
 })
-export class RefiFluxComponent implements OnInit, OnDestroy {
-
+export class UsersComponent implements OnInit, OnDestroy {
   user$: Observable<User>;
   private userSubsciption: Subscription;
 
@@ -33,5 +32,4 @@ export class RefiFluxComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSubsciption.unsubscribe();
   }
-
 }

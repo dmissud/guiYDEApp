@@ -1,25 +1,21 @@
-<div *ngIf="(user$ | async).isAnonymous()" class="container">
+<div class="container">
   <div class="p-fluid">
     <h3>Identifiez-vous :</h3>
-    <div class="p-field p-float-label p-m-2">
+    <div *ngIf="(user$ | async).isAnonymous()" class="p-field p-float-label p-m-2">
       <input type="text" id="name" pInputText [(ngModel)]="userName"/>
       <label for="name">Nom utilisateur</label>
     </div>
-    <div class="p-field p-float-label p-m-2">
+    <div *ngIf="(user$ | async).isAnonymous()" class="p-field p-float-label p-m-2">
       <input type="password" id="password" pPassword [(ngModel)]="userPassword" feedback="false"/>
       <label for="password">Mot de passe</label>
     </div>
-    <div class="p-field p-m-2">
-      <p-button label="Connexion" pRipple type="submit"
+    <div *ngIf="(user$ | async).isAnonymous()" class="p-field p-m-2">
+      <p-button label="Connexion"  type="submit"
                 icon="pi pi-key" iconPos="right"
                 (onClick)="doConnection($event)"></p-button>
     </div>
-  </div>
-</div>
-<div *ngIf="!(user$ | async).isAnonymous()" class="container">
-  <div class="p-fluid">
-    <div class="p-field p-m-2">
-      <p-button label="Deconnexion" pRipple type="submit"
+    <div *ngIf="!(user$ | async).isAnonymous()" class="p-field p-m-2">
+      <p-button label="Deconnexion"  type="submit"
                 icon="pi pi-power-off" iconPos="right"
                 (onClick)="doDeconnection($event)"></p-button>
     </div>
