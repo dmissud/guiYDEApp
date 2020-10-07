@@ -26,5 +26,7 @@ export class LoginComponent implements OnInit {
 
   doDeconnection($event: MouseEvent): void {
     this.authService.logout();
+    this.userName = '';
+    this.userPassword = '';
   }
 }

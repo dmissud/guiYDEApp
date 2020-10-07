@@ -1,5 +1,5 @@
-<div class="container">
-  <div *ngIf="(user$ | async).isAnonymous()" class="p-fluid">
+<div *ngIf="(user$ | async).isAnonymous()" class="container">
+  <div class="p-fluid">
     <h3>Identifiez-vous :</h3>
     <div class="p-field p-float-label p-m-2">
       <input type="text" id="name" pInputText [(ngModel)]="userName"/>
@@ -15,7 +15,9 @@
                 (onClick)="doConnection($event)"></p-button>
     </div>
   </div>
-  <div *ngIf="!(user$ | async).isAnonymous()" class="p-fluid">
+</div>
+<div *ngIf="!(user$ | async).isAnonymous()" class="container">
+  <div class="p-fluid">
     <div class="p-field p-m-2">
       <p-button label="Deconnexion" pRipple type="submit"
                 icon="pi pi-power-off" iconPos="right"
