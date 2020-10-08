@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../service/auth.service';
 import {Observable} from 'rxjs';
-import {User} from '../../model/User';
+import {Auth} from '../../model/Auth';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,7 @@ import {User} from '../../model/User';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  user$: Observable<User>;
+  user$: Observable<Auth>;
   userName: string;
   userPassword: string;
 

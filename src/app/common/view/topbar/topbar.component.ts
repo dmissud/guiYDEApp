@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {Observable, Subscription} from 'rxjs';
 import {AuthService} from '../../service/auth.service';
-import {User} from '../../model/User';
+import {Auth} from '../../model/Auth';
 
 @Component({
   selector: 'app-topbar',
@@ -12,7 +12,7 @@ import {User} from '../../model/User';
 export class TopbarComponent implements OnInit, OnDestroy {
   generalItems: MenuItem[];
   display: boolean;
-  user$: Observable<User>;
+  user$: Observable<Auth>;
   private applicationItems: MenuItem;
   private usersItems: MenuItem;
   private refiItems: MenuItem;

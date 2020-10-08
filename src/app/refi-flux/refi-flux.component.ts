@@ -3,7 +3,7 @@ import {AuthService} from '../common/service/auth.service';
 import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {Observable, Subscription} from 'rxjs';
-import {User} from '../common/model/User';
+import {Auth} from '../common/model/Auth';
 
 @Component({
   selector: 'app-refi-flux',
@@ -12,7 +12,7 @@ import {User} from '../common/model/User';
 })
 export class RefiFluxComponent implements OnInit, OnDestroy {
 
-  user$: Observable<User>;
+  user$: Observable<Auth>;
   private userSubsciption: Subscription;
 
   constructor(private router: Router,

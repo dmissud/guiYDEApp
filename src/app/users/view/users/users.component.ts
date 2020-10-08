@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {User} from '../../../common/model/User';
+import {Auth} from '../../../common/model/Auth';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../common/service/auth.service';
 import {MessageService} from 'primeng/api';
@@ -11,7 +11,7 @@ import {MessageService} from 'primeng/api';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  user$: Observable<User>;
+  user$: Observable<Auth>;
   private userSubsciption: Subscription;
 
   constructor(private router: Router,

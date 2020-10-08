@@ -1,4 +1,4 @@
-export class User {
+export class Auth {
   private readonly name: string;
   private token: string;
   private grants: string[];

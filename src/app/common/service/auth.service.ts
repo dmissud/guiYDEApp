@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {User} from '../model/User';
+import {Auth} from '../model/Auth';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 
@@ -10,8 +10,8 @@ import {environment} from '../../../environments/environment';
 })
 export class AuthService {
 
-  private userLoggedSubject: BehaviorSubject<User> = new BehaviorSubject<User>(new User('', '', []));
-  public userLogged: Observable<User> = this.userLoggedSubject.asObservable();
+  private userLoggedSubject: BehaviorSubject<Auth> = new BehaviorSubject<Auth>(new Auth('admin', '', ['ROLE_ADMIN']));
+  public userLogged: Observable<Auth> = this.userLoggedSubject.asObservable();
   private loginUrl = environment.API_YDEAPP_URL + '/authenticate';
 
   constructor(private httpClient: HttpClient) {
@@ -27,14 +27,14 @@ export class AuthService {
 
   login(username: string, password: string): void {
     this.httpClient.post(this.loginUrl, {username, password})
-      .pipe(map((response: any) => new User(username, response.token, response.grants)))
+      .pipe(map((response: any) => new Auth(username, response.token, response.grants)))
       .toPromise()
       .then(user => this.userLoggedSubject.next(user))
       .catch(err => console.log(err));
   }
 
   logout(): void {
-    this.userLoggedSubject.next(new User('', '', []));
+    this.userLoggedSubject.next(new Auth('', '', []));
   }
 
   isLogin(): boolean {
