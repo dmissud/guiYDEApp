@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RefiFluxRoutingModule} from '../refi-flux/refi-flux-routing.module';
-import { ApplicationComponent } from './view/application/application/application.component';
 
-
+import { ApplicationComponent } from './view/application/application.component';
+import {ApplicationRoutingModule} from './application-routing.module';
 
 @NgModule({
   declarations: [ApplicationComponent],
   imports: [
     CommonModule,
-    RefiFluxRoutingModule
+    ApplicationRoutingModule
   ]
 })
 export class ApplicationModule { }

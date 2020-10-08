@@ -3,7 +3,7 @@ export interface Application {
   shortDescription: string;
   longDescription: string;
   personne: Personne;
-  cycleLife: CylceLife;
+  cycleLife: CycleLife;
   itSolution: ItSolution;
   criticity: Criticity;
   notes: Note[];
@@ -13,7 +13,7 @@ export interface Personne{
   firstName: string;
   lastName: string;
 }
-export interface CylceLife{
+export interface CycleLife{
   state: string;
   dateOfCreation: Date;
   dateOfLastUpdate: Date;
