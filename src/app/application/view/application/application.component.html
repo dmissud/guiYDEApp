@@ -1,1 +1,60 @@
-<p>application works!</p>
+<div class="card">
+
+  <div class="p-grid">
+
+      <div class="p-col-6">
+
+         <div class="p-mr-2">Descriptif</div>
+
+       <div class="p-field p-grid">
+            <label for="codeApplication" class="p-col-fixed" style="width:200px">code application : </label>
+            <div class="p-col">
+                <output id="codeApplication"  class="p-outputtext p-component"  >{{application.codeApplication}}</output>
+            </div>
+       </div>
+       <div class="p-field p-grid">
+          <label for="shortDescription" class="p-col-fixed" style="width:200px">Libellé court : </label>
+          <div class="p-col">
+              <output id="shortDescription"  class="p-outputtext p-component"  >{{application.shortDescription}}</output>
+          </div>
+       </div>
+       <div class="p-field p-grid">
+          <label for="longDescription" class="p-col-fixed" style="width:200px">Libellé long : </label>
+          <div class="p-col">
+              <output id="longDescription" class="p-outputtext p-component"  >{{application.longDescription}}</output>
+          </div>
+       </div>
+
+      </div>
+        <div class="p-col-6">
+
+          <app-personne [personne]="application"></app-personne>
+
+        </div>
+
+    </div>
+
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <p-tabView>
+          <p-tabPanel header="Cycle de vie">
+              <app-cyclelife [cycleLife]="application"></app-cyclelife>
+          </p-tabPanel>
+          <p-tabPanel header="Solution IT">
+              <app-itsolution [itSolution]="application"></app-itsolution>
+          </p-tabPanel>
+          <p-tabPanel header="Criticité">
+              <app-criticity [criticity]="application"></app-criticity>
+          </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <app-notes [notes]="application"></app-notes>
+    </div>
+  </div>
+
+</div>

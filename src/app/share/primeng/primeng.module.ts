@@ -16,6 +16,9 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {PasswordModule} from 'primeng/password';
 import {SlideMenuModule} from 'primeng/slidemenu';
 import {InputTextModule} from 'primeng/inputtext';
+import {TabViewModule} from 'primeng/tabview';
+import {TableModule} from 'primeng/table';
+
 
 @NgModule({
   declarations: [],
@@ -37,7 +40,9 @@ import {InputTextModule} from 'primeng/inputtext';
     InputSwitchModule,
     PasswordModule,
     InputTextModule,
-    SlideMenuModule
+    SlideMenuModule,
+    TabViewModule,
+    TableModule
   ],
   exports: [
     RippleModule,
@@ -56,7 +61,9 @@ import {InputTextModule} from 'primeng/inputtext';
     InputSwitchModule,
     PasswordModule,
     InputTextModule,
-    SlideMenuModule
+    SlideMenuModule,
+    TabViewModule,
+    TableModule
   ]
 })
 export class PrimengModule {
