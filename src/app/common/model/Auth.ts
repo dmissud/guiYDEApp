@@ -1,23 +1,24 @@
 export class Auth {
-  private readonly name: string;
+  readonly uid: string;
   private token: string;
   private grants: string[];
 
-  constructor(name: string, token: string, grants: string[]) {
-    this.name = name;
+  constructor(uid: string, token: string, grants: string[]) {
+    this.uid = uid;
+    this.token = token;
     this.grants = grants;
   }
 
   isAnonymous(): boolean {
-    return this.name.length === 0;
+    return this.uid.length === 0;
   }
 
   isUser(): boolean {
-    return this.grants.includes(`ROLE_USER`);
+    return this.grants.includes(`USER`);
   }
 
   isAdmin(): boolean {
-    return this.grants.includes(`ROLE_ADMIN`);
+    return this.grants.includes(`ADMIN`);
   }
 
   giveToken(): string {

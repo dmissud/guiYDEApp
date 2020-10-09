@@ -12,7 +12,8 @@ import {Auth} from '../../model/Auth';
 export class TopbarComponent implements OnInit, OnDestroy {
   generalItems: MenuItem[];
   display: boolean;
-  user$: Observable<Auth>;
+  auth$: Observable<Auth>;
+  uid: string;
   private applicationItems: MenuItem;
   private usersItems: MenuItem;
   private refiItems: MenuItem;
@@ -22,9 +23,14 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.user$ = this.authService.userLogged;
-    this.userSubsciption = this.user$.subscribe(user =>
-      this.buildGeneralMenu(user.isAdmin()));
+    this.auth$ = this.authService.userLogged;
+    this.userSubsciption = this.auth$.subscribe(user => {
+        this.buildGeneralMenu(user.isAdmin());
+        this.uid = user.uid;
+        console.log(this.uid);
+      }
+    );
+
   }
 
   ngOnDestroy(): void {

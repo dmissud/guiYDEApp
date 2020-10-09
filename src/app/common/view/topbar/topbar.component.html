@@ -5,8 +5,9 @@
   </div>
   <div class="p-toolbar-group-right p-justify-between" tooltipposition="bottom">
     <div>
-      <span *ngIf="(user$ | async).isUser()" class="pi yde-theme pi-user"></span>
-      <span *ngIf="(user$ | async).isAdmin()" class="pi yde-theme pi-user-plus"></span>
+      <span *ngIf="(auth$ | async)" class="p-m-2">UID : {{uid}}</span>
+      <span *ngIf="(auth$ | async).isUser()" class="pi yde-theme pi-user"></span>
+      <span *ngIf="(auth$ | async).isAdmin()" class="pi yde-theme pi-user-plus"></span>
     </div>
     <p-button type="text" (click)="display = true" icon="pi pi-cog"></p-button>
   </div>

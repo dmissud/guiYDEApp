@@ -10,11 +10,20 @@ import {environment} from '../../../environments/environment';
 })
 export class AuthService {
 
-  private userLoggedSubject: BehaviorSubject<Auth> = new BehaviorSubject<Auth>(new Auth('admin', '', ['ROLE_ADMIN']));
+  private userLoggedSubject: BehaviorSubject<Auth> = new BehaviorSubject<Auth>(new Auth('', '', []));
   public userLogged: Observable<Auth> = this.userLoggedSubject.asObservable();
   private loginUrl = environment.API_YDEAPP_URL + '/authenticate';
 
+  private readonly ydeAuth = 'ydeAuth';
+
   constructor(private httpClient: HttpClient) {
+    const localAuth = localStorage.getItem(this.ydeAuth);
+    if (localAuth !== null) {
+      const authStr = JSON.parse(localAuth);
+      const auth: Auth = new Auth(authStr.uid, authStr.token, authStr.grants);
+      console.log(auth);
+      this.userLoggedSubject.next(auth);
+    }
   }
 
   get userIsAdmin(): boolean {
@@ -29,16 +38,22 @@ export class AuthService {
     this.httpClient.post(this.loginUrl, {username, password})
       .pipe(map((response: any) => new Auth(username, response.token, response.grants)))
       .toPromise()
-      .then(user => this.userLoggedSubject.next(user))
+      .then(auth => this.saveAuth(auth))
       .catch(err => console.log(err));
   }
 
   logout(): void {
+    localStorage.removeItem(this.ydeAuth);
     this.userLoggedSubject.next(new Auth('', '', []));
   }
 
   isLogin(): boolean {
     return !this.userLoggedSubject.value.isAnonymous();
+  }
+
+  saveAuth(auth: Auth): void {
+    localStorage.setItem(this.ydeAuth, JSON.stringify(auth));
+    this.userLoggedSubject.next(auth);
   }
 
   getToken(): string {
