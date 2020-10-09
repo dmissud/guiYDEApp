@@ -46,3 +46,10 @@ testem.log
 .DS_Store
 Thumbs.db
 /src/app/.sass-cache/
+/src/app/users/view/users/.sass-cache/
+/src/app/refi-flux/.sass-cache/
+/src/app/common/view/utility-view/.sass-cache/
+/src/app/common/view/login/.sass-cache/
+/src/app/common/view/main-organization/.sass-cache/
+/src/app/common/view/organization-view/.sass-cache/
+/src/app/common/view/topbar/.sass-cache/
