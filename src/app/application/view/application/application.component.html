@@ -36,24 +36,21 @@
 
 
   <div class="p-grid">
-    <div class="p-col-12">
+    <div class="p-col-6">
       <p-tabView>
           <p-tabPanel header="Cycle de vie">
-              <app-cyclelife [cycleLife]="application"></app-cyclelife>
+              <app-cyclelife [cycleLife]="application.cycleLife"></app-cyclelife>
           </p-tabPanel>
           <p-tabPanel header="Solution IT">
               <app-itsolution [itSolution]="application.itSolution"></app-itsolution>
           </p-tabPanel>
           <p-tabPanel header="Criticité">
-              <app-criticity [criticity]="application"></app-criticity>
+              <app-criticity [criticity]="application.criticity"></app-criticity>
           </p-tabPanel>
       </p-tabView>
     </div>
-  </div>
-
-  <div class="p-grid">
-    <div class="p-col-12">
-      <app-notes [notes]="application"></app-notes>
+    <div class="p-col-6">
+      <app-notes [notes]="application.notes"></app-notes>
     </div>
   </div>
 
