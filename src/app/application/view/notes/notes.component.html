@@ -1,0 +1,20 @@
+<p>
+  <span class="p-mr-2" > Note sur l'application </span>
+  <button pButton type="button" label="Ajouter une note" class="p-button-raised p-button-rounded"></button>
+</p>
+<p-table [value]="application.notes">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Date de la note</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-note>
+    <tr>
+      <td>{{note.noteTitle}}</td>
+      <td>{{note.noteContent}}</td>
+      <td>{{note.noteCreationDate | date: 'd / MM / yyyy'}}</td>
+    </tr>
+  </ng-template>
+</p-table>

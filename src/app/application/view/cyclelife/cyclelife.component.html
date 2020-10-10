@@ -1,0 +1,24 @@
+<div class="p-field p-grid">
+  <label for="state" class="p-col-fixed" style="width:250px">Etat de l'application : </label>
+  <div class="p-col">
+    <output id="state"  class="p-outputtext p-component" >{{application.cycleLife.state}}</output>
+  </div>
+</div>
+<div class="p-field p-grid">
+  <label for="dateOfCreation" class="p-col-fixed" style="width:250px">Date de début de vie : </label>
+  <div class="p-col">
+    <output id="dateOfCreation"  class="p-outputtext p-component" >{{application.cycleLife.dateOfCreation | date: 'd / MM / yyyy'}}</output>
+  </div>
+</div>
+<div class="p-field p-grid">
+  <label for="dateOfLastUpdate" class="p-col-fixed" style="width:250px">Date de dernière mise à jour : </label>
+  <div class="p-col">
+    <output id="dateOfLastUpdate"  class="p-outputtext p-component" >{{application.cycleLife.dateOfLastUpdate | date: 'd / MM / yyyy'}}</output>
+  </div>
+</div>
+<div class="p-field p-grid">
+  <label for="dateEndInReality" class="p-col-fixed" style="width:250px">Date de fin de vie : </label>
+  <div class="p-col">
+    <output id="dateEndInReality"  class="p-outputtext p-component" >{{application.cycleLife.dateEndInReality | date: 'd / MM / yyyy'}}</output>
+  </div>
+</div>
