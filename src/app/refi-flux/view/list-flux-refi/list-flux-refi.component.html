@@ -1,0 +1,27 @@
+<div class="card">
+  <br/>
+  <div class="p-text-center"><h4>Liste des Flux REFi Traités</h4></div>
+  <p-table [value]="allFlux" selectionMode="single" [(selection)]="selectedFlux" dataKey="fluxId"
+           (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Date création</th>
+        <th>File Up Load</th>
+        <th>Statut du Flux</th>
+        <th>Statut du Job</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-flux>
+      <tr [pSelectableRow]="flux">
+        <td>{{flux.createDate}}</td>
+        <td>{{flux.originalName}}</td>
+        <td>{{flux.fluxState}}</td>
+        <td>{{flux.jobStatus}}</td>
+        <td>
+          <button type="button" pButton pRipple icon="pi pi-search" (click)="selectProduct(flux)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
