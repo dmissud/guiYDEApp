@@ -1,1 +1,8 @@
-<p>refi-flux works!</p>
+<p-fileUpload name="fluxRefi" [url]="url" (onUpload)="onUpload($event)"
+              multiple="single" accept="text/csv" maxFileSize="10000000" fileLimit="1" [headers]="httpHeaders">
+  <ng-template pTemplate="content">
+    <ul *ngIf="uploadedFiles.length">
+      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+    </ul>
+  </ng-template>
+</p-fileUpload>
