@@ -9,22 +9,18 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ApiService {
-  private ydeAppUrl = environment.API_YDEAPP_URL;
+  ydeAppUrl = environment.API_YDEAPP_URL;
 
   constructor(private http: HttpClient,
               private notificationService: NotificationService) {
   }
 
   get(url: string, urlParams?: HttpParams): Observable<any> {
-    console.log(this.ydeAppUrl + url);
     return this.http.get(this.ydeAppUrl + url, {headers: this.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
   post(url: string, body: object): Observable<any> {
-    console.log(this.ydeAppUrl + url);
-    console.log(body);
-    console.log(JSON.stringify(body));
     return this.http.post(this.ydeAppUrl + url, body, {headers: this.getHeaders()})
       .pipe(catchError(error => this.handleError(error)));
   }

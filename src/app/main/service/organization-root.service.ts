@@ -19,7 +19,6 @@ export class OrganizationRootService {
   loadApplicationsRoot(): void {
     this.api.get(this.organizationsUrl)
       .pipe(map((reponse: any) => {
-        console.log(reponse);
         return reponse as OrganizationDesc[];
       }))
       .subscribe(lstOrgaRoot => this.organizationRootBehaviorSubject.next(lstOrgaRoot));

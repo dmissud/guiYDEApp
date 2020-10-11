@@ -24,7 +24,6 @@ export class TreeApplicationByOrganizationService {
   loadApplicationsTree(idRefog: string): void {
     let url: string;
     url = this.organizationsUrl + '/' + idRefog + '/applications';
-    console.log(url);
     this.api.get(url).pipe(map((organizationLstResponse: any) => {
       const organization = this.buildTreeOfApplications(organizationLstResponse, 0);
       const treeNode: TreeNode = {label: organization.label, children: organization.children};

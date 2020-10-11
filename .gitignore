@@ -48,10 +48,10 @@ Thumbs.db
 /src/app/.sass-cache/
 /src/app/users/view/users/.sass-cache/
 /src/app/refi-flux/.sass-cache/
-/src/app/common/view/utility-view/.sass-cache/
-/src/app/common/view/login/.sass-cache/
-/src/app/common/view/main-tree/.sass-cache/
-/src/app/common/view/tree-applications-view/.sass-cache/
-/src/app/common/view/topbar/.sass-cache/
-/src/app/common/view/notification/.sass-cache/
+/src/app/main/view/utility-view/.sass-cache/
+/src/app/main/view/login/.sass-cache/
+/src/app/main/view/main-tree/.sass-cache/
+/src/app/main/view/tree-applications-view/.sass-cache/
+/src/app/main/view/topbar/.sass-cache/
+/src/app/main/view/notification/.sass-cache/
 /src/.sass-cache/

@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {Auth} from '../../../common/model/Auth';
+import {Auth} from '../../../main/model/Auth';
 import {Router} from '@angular/router';
-import {AuthService} from '../../../common/service/auth.service';
+import {AuthService} from '../../../main/service/auth.service';
 import {MessageService} from 'primeng/api';
 
 @Component({

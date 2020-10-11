@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Application, Criticity, CycleLife, ItSolution, Note, Personne} from '../model/Application';
 import {map} from 'rxjs/operators';
-import {ApiService} from '../../common/service/api.service';
+import {ApiService} from '../../main/service/api.service';
 
 
 @Injectable({

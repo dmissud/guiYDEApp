@@ -24,6 +24,7 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
 import {FileUploadModule} from 'primeng/fileupload';
+import {TooltipModule} from 'primeng/tooltip';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     DropdownModule,
     MessagesModule,
     MessageModule,
-    FileUploadModule
+    FileUploadModule,
+    TooltipModule
   ],
   exports: [
     RippleModule,
@@ -81,7 +83,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     DropdownModule,
     MessagesModule,
     MessageModule,
-    FileUploadModule
+    FileUploadModule,
+    TooltipModule
   ],
   providers: [MessageService]
 })

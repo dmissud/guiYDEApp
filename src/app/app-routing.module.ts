@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MainTreeApplicationsComponent} from './common/view/main-tree/main-tree-applications.component';
+import {MainTreeApplicationsComponent} from './main/view/main-tree/main-tree-applications.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'tree', pathMatch: 'full'},
