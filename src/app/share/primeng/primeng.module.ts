@@ -49,7 +49,7 @@ import {FileUploadModule} from 'primeng/fileupload';
     SlideMenuModule,
     TabViewModule,
     TableModule,
-    CardModule
+    CardModule,
     TableModule,
     DropdownModule,
     MessagesModule,
