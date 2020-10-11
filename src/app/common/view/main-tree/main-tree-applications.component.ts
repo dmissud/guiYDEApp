@@ -1,32 +1,42 @@
-import {Component, OnInit} from '@angular/core';
-
-interface Root {
-  name: string;
-  idRefog: string;
-}
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
+import {OrganizationDesc} from '../../model/OrganizationDesc';
+import {OrganizationRootService} from '../../service/organization-root.service';
+import {TreeApplicationByOrganizationService} from '../../service/tree-application-by-organization.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main-tree-applications.component.html',
   styleUrls: ['./main-tree-applications.component.scss']
 })
-export class MainTreeApplicationsComponent implements OnInit {
+export class MainTreeApplicationsComponent implements OnInit, OnDestroy {
   modeOrganization: boolean;
-  roots: Root[];
-  selectedRoot: Root;
+  roots: OrganizationDesc[];
+  selectedRoot: OrganizationDesc;
+  roots$: Observable<OrganizationDesc[]>;
+  private subscription: Subscription;
 
-  constructor() {
-    this.roots = [
-      {name: 'ITG FIT', idRefog: '10000000'},
-      {name: 'ITG FRESH', idRefog: '20000000'}
-    ];
+  constructor(private organizationRootService: OrganizationRootService,
+              private treeAppicationByOrganizationService: TreeApplicationByOrganizationService) {
+    this.roots$ = this.organizationRootService.organizationRootObservable;
+    this.subscription = this.roots$.subscribe(
+      lstOfRoot => {
+        if ((lstOfRoot !== undefined) && (lstOfRoot.length !== 0)) {
+          this.treeAppicationByOrganizationService.loadApplicationsTree(lstOfRoot[0].idRefog);
+        }
+      }
+    );
   }
 
   ngOnInit(): void {
     this.modeOrganization = true;
+    this.organizationRootService.loadApplicationsRoot();
   }
 
   rootChange(): void {
     console.log(this.selectedRoot);
+  }
+
+  ngOnDestroy(): void {
   }
 }

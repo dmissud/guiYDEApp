@@ -2,7 +2,7 @@
   <br/>
   <br/>
   <br/>
-  <app-login></app-login>
+  <app-login (dismiss)="onDismiss($event)"></app-login>
   <hr/>
   <p-panelMenu [model]="items"></p-panelMenu>
 </div>

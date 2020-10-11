@@ -1,18 +1,16 @@
-<script src="../tree-applications-view/tree-applications-view.component.ts"></script>
 <div class="p-grid p-ai-md-stretch vertical-container">
   <div class="p-col-12">
     <p-toolbar>
       <div class="p-toolbar-group-left">
-        <p-dropdown [options]="roots" [(ngModel)]="selectedRoot" optionLabel="name"
+        <p-dropdown [options]="roots$ | async" [(ngModel)]="selectedRoot" optionLabel="name"
                     (onChange)="rootChange()"></p-dropdown>
-        <p-message></p-message>
       </div>
       <div class="p-toolbar-group-right">
         <p-inputSwitch [(ngModel)]="modeOrganization"></p-inputSwitch>
       </div>
     </p-toolbar>
     <div class="box box-stretched">
-      <app-organization-view [horizontal]="modeOrganization"></app-organization-view>
+      <app-tree-application-view [horizontal]="modeOrganization"></app-tree-application-view>
     </div>
   </div>
 </div>

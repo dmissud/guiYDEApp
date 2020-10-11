@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
 import {Application, Criticity, CycleLife, ItSolution, Note, Personne} from '../model/Application';
 import {map} from 'rxjs/operators';
+import {ApiService} from '../../common/service/api.service';
 
 
 @Injectable({
@@ -14,18 +13,17 @@ export class ApplicationService {
   private applicationSubject: BehaviorSubject<Application> = new BehaviorSubject<Application>(new Application('', '',
     '', null, null, null, null, []));
   public applicationObservable: Observable<Application> = this.applicationSubject.asObservable();
-  private applicationUrl = environment.API_YDEAPP_URL + '/applications/?codeApplication=';
+  private applicationUrl = '/applications/';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private api: ApiService) {
     this.loadApplicationBidon();
   }
 
   // tslint:disable-next-line:typedef
   loadApplication(codeApplication: string) {
-    this.httpClient.get(this.applicationUrl + codeApplication).pipe(map((applicationResponse: any) =>
-      this.buildApplication(applicationResponse)
-    )).toPromise()
-      .then((application: Application) => this.applicationSubject.next(application));
+    this.api.get(this.applicationUrl + codeApplication)
+      .pipe(map(applicationResponse => applicationResponse as Application))
+      .subscribe((application: Application) => this.applicationSubject.next(application));
   }
 
   private buildApplication(applicationResponse: Application): Application {

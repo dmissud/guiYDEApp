@@ -94,4 +94,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     };
   }
 
+  onDismiss($event: boolean): void {
+    this.display = $event;
+  }
 }

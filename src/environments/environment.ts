@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_YDEAPP_URL: 'http://localhost:9090'
+  API_YDEAPP_URL: 'http://localhost:9090/api/V1'
 };
 
 /*

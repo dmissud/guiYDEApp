@@ -1,10 +1,12 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
 import {TreeNode} from 'primeng/api';
-import {Application, Organization, OrganizationListResponse} from '../model/Organization';
+import {Organization} from '../model/Organization';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {ApiService} from './api.service';
+import {OrganizationListResponse} from '../model/OrganizationListReponse';
+import {ApplicationDesc} from '../model/ApplicationDesc';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +15,21 @@ export class TreeApplicationByOrganizationService {
 
   private treeOfApplicationSubject = new BehaviorSubject<TreeNode[]>([]);
   treeOfApplicationObservable: Observable<TreeNode[]> = this.treeOfApplicationSubject.asObservable();
-  private organizationsUrl = 'http://localhost:9090/api/V1/organizations/10000000/applications';
+  private organizationsUrl = '/organizations';
 
-  constructor(private httpClient: HttpClient) {
-    this.loadApplicationsTree();
+  constructor(private api: ApiService) {
+    // this.loadApplicationsTree('10000000');
   }
 
-  loadApplicationsTree(): void {
-    this.httpClient.get(this.organizationsUrl).pipe(map((organizationLstResponse: any) => {
+  loadApplicationsTree(idRefog: string): void {
+    let url: string;
+    url = this.organizationsUrl + '/' + idRefog + '/applications';
+    console.log(url);
+    this.api.get(url).pipe(map((organizationLstResponse: any) => {
       const organization = this.buildTreeOfApplications(organizationLstResponse, 0);
       const treeNode: TreeNode = {label: organization.label, children: organization.children};
       return [treeNode];
-    })).toPromise()
-      .then(orga => this.treeOfApplicationSubject.next(orga));
+    })).subscribe(orga => this.treeOfApplicationSubject.next(orga));
   }
 
   private buildTreeOfApplications(organizationLstResponse: OrganizationListResponse, level: number): Organization {
@@ -33,6 +37,6 @@ export class TreeApplicationByOrganizationService {
       organizationLstResponse.name,
       level,
       organizationLstResponse.children.map(orga => this.buildTreeOfApplications(orga, level + 1)),
-      organizationLstResponse.applications.map(appli => new Application(appli.codeApplication, appli.shortDescription)));
+      organizationLstResponse.applications.map(appli => new ApplicationDesc(appli.codeApplication, appli.shortDescription)));
   }
 }

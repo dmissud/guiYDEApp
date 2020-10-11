@@ -31,12 +31,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
             this.msgs = [];
             this.timeCount = 0;
           }, 3000);
-          console.log(this.timeCount);
         }
       });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onReject(): void {
+    console.log('onReject');
+  }
+
+  onConfirm(): void {
+    console.log('onConfirm');
   }
 }

@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, throwError} from 'rxjs';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Auth} from '../model/Auth';
-import {environment} from '../../../environments/environment';
-import {catchError} from 'rxjs/operators';
-import {NotificationService} from './notification.service';
+import {ApiService} from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +10,11 @@ export class AuthService {
 
   private userLoggedSubject: BehaviorSubject<Auth> = new BehaviorSubject<Auth>(new Auth('', '', []));
   public userLogged: Observable<Auth> = this.userLoggedSubject.asObservable();
-  private loginUrl = environment.API_YDEAPP_URL + '/authenticate';
+  private loginUrl = '/authenticate';
 
   private readonly ydeAuth = 'ydeAuth';
 
-  constructor(private httpClient: HttpClient, private notificationService: NotificationService) {
+  constructor(private api: ApiService) {
     const localAuth = localStorage.getItem(this.ydeAuth);
     if (localAuth !== null) {
       const authStr = JSON.parse(localAuth);
@@ -35,9 +32,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): void {
-    this.httpClient
-      .post(this.loginUrl, {username, password})
-      .pipe(catchError(error => this.handleError(error)))
+    this.api.post(this.loginUrl, {username, password})
       .subscribe(
         auth => {
           this.saveAuth(new Auth(username, auth.token, auth.grants));
@@ -62,21 +57,5 @@ export class AuthService {
     return this.userLoggedSubject.value.giveToken();
   }
 
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-      this.notificationService.notify('error', 'Connexion', 'Identification érronée');
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
 
 }

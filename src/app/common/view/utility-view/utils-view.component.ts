@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 
 @Component({
@@ -7,7 +7,7 @@ import {MenuItem} from 'primeng/api';
   styleUrls: ['./utils-view.component.scss']
 })
 export class UtilsViewComponent implements OnInit {
-
+  @Output() dismiss = new EventEmitter<boolean>();
   items: MenuItem[];
   private paramItems: MenuItem;
 
@@ -92,5 +92,9 @@ export class UtilsViewComponent implements OnInit {
 
       head.appendChild(style);
     }
+  }
+
+  onDismiss($event: boolean): void {
+    this.dismiss.emit($event);
   }
 }

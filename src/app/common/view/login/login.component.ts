@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../service/auth.service';
 import {Observable, Subscription} from 'rxjs';
 import {Auth} from '../../model/Auth';
@@ -10,6 +10,8 @@ import {NotificationService} from '../../service/notification.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  @Output() dismiss = new EventEmitter<boolean>();
+
   user$: Observable<Auth>;
   userName: string;
   userPassword: string;
@@ -35,11 +37,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   doConnection($event: MouseEvent): void {
     this.authService.login(this.userName, this.userPassword);
+    this.dismiss.emit(false);
   }
 
   doDeconnection($event: MouseEvent): void {
     this.authService.logout();
     this.userName = '';
     this.userPassword = '';
+    this.dismiss.emit(false);
   }
 }

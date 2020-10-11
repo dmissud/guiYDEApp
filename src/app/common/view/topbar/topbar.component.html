@@ -13,6 +13,6 @@
   </div>
 </p-toolbar>
 <p-sidebar [(visible)]="display" position="right">
-  <app-utils-view></app-utils-view>
+  <app-utils-view (dismiss)="onDismiss($event)"></app-utils-view>
 </p-sidebar>
 

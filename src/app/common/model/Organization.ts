@@ -1,52 +1,18 @@
 import {TreeNode} from 'primeng/api';
-
-export interface ApplicationReponse {
-  codeApplication: string;
-  shortDescription: string;
-}
-
-export interface OrganizationListResponse {
-  idRefog: string;
-  name: string;
-  children: OrganizationListResponse[];
-  applications: ApplicationReponse[];
-}
-
-export class Application implements TreeNode {
-  private readonly codeApplication: string;
-  private readonly shortDescription: string;
-
-  constructor(codeApplication: string, shortDescription: string) {
-    this.codeApplication = codeApplication;
-    this.shortDescription = shortDescription;
-  }
-
-  get label(): string {
-    return this.shortDescription;
-  }
-
-  get data(): string {
-    return this.codeApplication;
-  }
-
-  get icon(): string {
-    return 'pi yde-theme yde-application';
-  }
-
-}
+import {ApplicationDesc} from './ApplicationDesc';
 
 export class Organization implements TreeNode {
   private readonly idRefog: string;
   private readonly name: string;
   private readonly level: number;
   private readonly organizations: Organization[];
-  private readonly applications: Application[];
+  readonly applications: ApplicationDesc[];
 
   constructor(idRefog: string,
               name: string,
               level: number,
               organizations: Organization[],
-              applications: Application[]) {
+              applications: ApplicationDesc[]) {
     this.idRefog = idRefog;
     this.name = name;
     this.level = level;
