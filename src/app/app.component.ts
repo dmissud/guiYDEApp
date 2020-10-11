@@ -11,11 +11,23 @@ export class AppComponent implements OnInit {
 
   display: boolean;
 
-  constructor(private primengConfig: PrimeNGConfig) {
+  constructor(private messageService: MessageService, private primengConfig: PrimeNGConfig) {
     this.display = true;
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+  }
+
+  onConfirm(): void {
+    this.messageService.clear('c');
+  }
+
+  onReject(): void {
+    this.messageService.clear('c');
+  }
+
+  clear(): void {
+    this.messageService.clear();
   }
 }

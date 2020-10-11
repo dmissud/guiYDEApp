@@ -1,13 +1,14 @@
-import {NgModule, OnDestroy, OnInit} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MainOrganizationComponent} from './common/view/main-organization/main-organization.component';
+import {MainTreeApplicationsComponent} from './common/view/main-tree/main-tree-applications.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'organisation', pathMatch: 'full'},
-  {path: 'organisation', component: MainOrganizationComponent},
+  {path: '', redirectTo: 'tree', pathMatch: 'full'},
+  {path: 'tree', component: MainTreeApplicationsComponent},
   {path: 'refi', loadChildren: () => import('./refi-flux/refi-flux.module').then(m => m.RefiFluxModule)},
   {path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule)},
   {path: 'application', loadChildren: () => import('./application/application.module').then(m => m.ApplicationModule)},
+  {path: 'organization', loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule)}
 ];
 
 @NgModule({

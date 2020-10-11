@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 .yde-theme {
-  background-size: 30px 30px;
+  background-size: 20px 20px;
   background-repeat: no-repeat;
-  height: 30px;
-  width: 40px;
+  height: 20px;
+  width: 20px;
 }
 
 .yde-theme-bootstrap4-light-blue {
@@ -40,4 +40,20 @@
 
 .yde-logo {
   background-image: url("style/yde-logo.png");
+}
+
+.yde-admin {
+  background-image: url("style/icons8-paramètres-administrateur-homme-64.png");
+}
+
+.yde-hierarchie-first {
+  background-image: url("style/icons8-stacked-organizational-chart-highlighted-first-node-80.png");
+}
+
+.yde-hierarchie-parent {
+  background-image: url("style/icons8-stacked-organizational-chart-highlighted-parent-node-80.png");
+}
+
+.yde-application {
+  background-image: url("style/icons8-template-64.png");
 }

@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {OrganizationViewComponent} from './organization-view.component';
+import {TreeApplicationsViewComponent} from './tree-applications-view.component';
 
 describe('OrganizationViewComponent', () => {
-  let component: OrganizationViewComponent;
-  let fixture: ComponentFixture<OrganizationViewComponent>;
+  let component: TreeApplicationsViewComponent;
+  let fixture: ComponentFixture<TreeApplicationsViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrganizationViewComponent ]
+      declarations: [TreeApplicationsViewComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrganizationViewComponent);
+    fixture = TestBed.createComponent(TreeApplicationsViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

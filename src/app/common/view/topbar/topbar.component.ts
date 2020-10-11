@@ -16,7 +16,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   uid: string;
   private applicationItems: MenuItem;
   private usersItems: MenuItem;
-  private refiItems: MenuItem;
+  private adminItems: MenuItem;
   private userSubsciption: Subscription;
 
   constructor(private authService: AuthService) {
@@ -27,7 +27,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.userSubsciption = this.auth$.subscribe(user => {
         this.buildGeneralMenu(user.isAdmin());
         this.uid = user.uid;
-        console.log(this.uid);
       }
     );
 
@@ -38,17 +37,17 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   private buildGeneralMenu(withAdminTools: boolean): void {
-    console.log('isAdmin:', withAdminTools);
     this.initializeItemForMenu(withAdminTools);
     this.generalItems = [
       {
         label: 'YDEApp',
         title: 'Une application pour parcourir les entrepôts d\'applications',
-        icon: 'pi yde-theme yde-logo'
+        icon: 'pi yde-theme yde-logo',
+        routerLink: '/'
       },
       this.applicationItems,
       this.usersItems,
-      this.refiItems
+      this.adminItems
     ];
   }
 
@@ -61,7 +60,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
           label: 'Par Organisation',
           icon: 'pi pi-fw pi-sitemap',
           title: 'Parcours via un arbre horizontal',
-          routerLink: '/organisation'
+          routerLink: '/tree'
         },
         {
           label: 'Repository',
@@ -76,11 +75,22 @@ export class TopbarComponent implements OnInit, OnDestroy {
       visible: isAdmin,
       routerLink: '/users'
     };
-    this.refiItems = {
-      label: 'Importation REFi',
-      icon: 'pi pi-fw pi-upload',
+    this.adminItems = {
+      label: 'Administration',
+      icon: 'pi yde-theme yde-admin',
       visible: isAdmin,
-      routerLink: '/refi'
+      items: [
+        {
+          label: 'Importation REFi',
+          icon: 'pi pi-fw pi-upload',
+          routerLink: '/refi'
+        },
+        {
+          label: 'Organisations',
+          icon: 'pi pi-fw pi-sitemap',
+          routerLink: '/organization'
+        }
+      ]
     };
   }
 

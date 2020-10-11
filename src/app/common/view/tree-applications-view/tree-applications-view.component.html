@@ -1,0 +1,2 @@
+<p-tree [value]="treeOfApplications$ | async" [layout]="horizontal?'horizontal':'vertical'" selectionMode="single"
+        [(selection)]="selectedNode" (onNodeSelect)="nodeSelected($event)"></p-tree>
