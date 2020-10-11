@@ -18,11 +18,11 @@ import {SlideMenuModule} from 'primeng/slidemenu';
 import {InputTextModule} from 'primeng/inputtext';
 import {TabViewModule} from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
+import {CardModule} from 'primeng/card';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
-import {TreeApplicationByOrganizationService} from '../../common/service/tree-application-by-organization.service';
 import {FileUploadModule} from 'primeng/fileupload';
 
 
@@ -49,6 +49,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     SlideMenuModule,
     TabViewModule,
     TableModule,
+    CardModule
+    TableModule,
     DropdownModule,
     MessagesModule,
     MessageModule,
@@ -74,12 +76,14 @@ import {FileUploadModule} from 'primeng/fileupload';
     SlideMenuModule,
     TabViewModule,
     TableModule,
+    CardModule,
+    TableModule,
     DropdownModule,
     MessagesModule,
     MessageModule,
     FileUploadModule
   ],
-  providers: [MessageService, TreeApplicationByOrganizationService]
+  providers: [MessageService]
 })
 export class PrimengModule {
 }

@@ -1,12 +1,23 @@
 .p-mr-2{
   font-weight: bold;
   text-decoration: underline;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-size: large;
 }
-.p-button-raised{
+.p-button-raised {
   text-decoration: none;
   position: absolute;
   right: 5px;
   margin-bottom: 10px;
+
+}
+.p-col-tab{
+  width: 40px;
+}
+.p-col-title{
+  font-weight : bold;
+  font-size: small;
+}
+.p-col-data{
+  font-size: small;
 }
