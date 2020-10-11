@@ -74,7 +74,9 @@ export class ApplicationService {
     const note5: Note = new Note('note1', 'blablabla1', dateb);
     const note6: Note = new Note('note2', 'encore plus blabla', dateup );
     const note7: Note = new Note('note1', 'blablabla1', dateb);
-    const note8: Note = new Note('note2', 'encore plus blabla', dateup );
+    const note8: Note = new Note('note2', 'encore plus blabla blalalalalbabababababababbaba' +
+      'uiouuupuououoiuuoupupuouoiuoupuupoupouoiu' +
+      'ruoiurououupuopup', dateup );
     const notesBidon = [note1 , note2, note3 , note4 , note5, note6, note7, note8 ] ;
     const applicationBidon: Application = new Application('Ap000001', 'appliTest',
       'application Test', personneBidon, cyclelifeBidon, itSolutionBidon, criticityBidon, notesBidon);

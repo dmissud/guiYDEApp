@@ -18,6 +18,7 @@ import {SlideMenuModule} from 'primeng/slidemenu';
 import {InputTextModule} from 'primeng/inputtext';
 import {TabViewModule} from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {TableModule} from 'primeng/table';
     InputTextModule,
     SlideMenuModule,
     TabViewModule,
-    TableModule
+    TableModule,
+    CardModule
   ],
   exports: [
     RippleModule,
@@ -63,7 +65,8 @@ import {TableModule} from 'primeng/table';
     InputTextModule,
     SlideMenuModule,
     TabViewModule,
-    TableModule
+    TableModule,
+    CardModule
   ]
 })
 export class PrimengModule {

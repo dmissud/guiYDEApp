@@ -3,22 +3,34 @@
   <ng-template pTemplate="caption">
     <div class="p-notes p-d-flex p-ai-center p-jc-between">
       Note sur l'application
-      <button pButton type="button" label="Ajouter une note" class="p-button-raised p-button-rounded p-button-sm"></button>
+      <button  pButton type="button" label="Ajouter une note" class="p-button-raised p-button-rounded p-button-sm"></button>
     </div>
   </ng-template>
 
   <ng-template pTemplate="header" >
-    <tr>
+    <tr class="p-col-title">
       <th>Titre</th>
       <th>Description</th>
       <th>Date de la note</th>
+      <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-note>
-    <tr>
+  <ng-template class="p-col-tab" pTemplate="body" let-note>
+    <tr class="p-col-data">
       <td>{{note.noteTitle}}</td>
-      <td>{{note.noteContent}}</td>
-      <td>{{note.noteCreationDate | date: 'd / MM / yyyy'}}</td>
+      <td >{{note.noteContent.length>15 ? note.noteContent.substring(0,10)+' .....': note.noteContent}}</td>
+      <td>{{note.noteCreationDate | date: 'dd / MM / yyyy'}}</td>
+      <td>
+        <span>
+        <p-button (click)="showNote(note)"  icon="pi pi-search"  ></p-button>
+
+        <p-dialog *ngIf="$noteDisplay"  header="{{$noteDisplay.noteTitle}}"  [(visible)]="displayNote" [style]="{width: '50vw'}" [baseZIndex]="10000">
+          <p>{{$noteDisplay.noteContent}}</p>
+
+        </p-dialog>
+         </span>
+
+      </td>
     </tr>
   </ng-template>
 </p-table>
