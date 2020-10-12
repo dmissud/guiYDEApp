@@ -25,6 +25,7 @@ import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TooltipModule} from 'primeng/tooltip';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 
 
@@ -57,7 +58,8 @@ import {TooltipModule} from 'primeng/tooltip';
     MessagesModule,
     MessageModule,
     FileUploadModule,
-    TooltipModule
+    TooltipModule,
+    ConfirmDialogModule
   ],
   exports: [
     RippleModule,
@@ -85,7 +87,8 @@ import {TooltipModule} from 'primeng/tooltip';
     MessagesModule,
     MessageModule,
     FileUploadModule,
-    TooltipModule
+    TooltipModule,
+    ConfirmDialogModule
   ],
   providers: [MessageService]
 })

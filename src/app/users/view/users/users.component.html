@@ -6,11 +6,9 @@
       <button pButton pRipple label="Ajouter utilisateur" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
       <button pButton pRipple label="Supprimer utilisateur" icon="pi pi-minus" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
     </ng-template>
-
-
   </p-toolbar>
 
-  <p-table #dt [value]="(users$ | async)" [rows]="3" [paginator]="true" styleClass="p-datatable-lg" [globalFilterFields]="['lastName','uid','admin','user']"
+  <p-table #dt [value]="(users$ | async)" [rows]="10" [paginator]="true" styleClass="p-datatable-lg" [globalFilterFields]="['lastName','uid','admin','user']"
            [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
            currentPageReportTemplate="Utilisateurs {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true">
     <ng-template pTemplate="caption">

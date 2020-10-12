@@ -21,9 +21,20 @@ export class ApiService {
   }
 
   post(url: string, body: object): Observable<any> {
-    return this.http.post(this.ydeAppUrl + url, body, {headers: this.getHeaders()})
+    return this.http.post(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders()})
       .pipe(catchError(error => this.handleError(error)));
   }
+
+  put(url: string, body: object): Observable<any> {
+    return this.http.put(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders()})
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  delete(url: string): Observable<any> {
+    return this.http.delete(this.ydeAppUrl + url, {headers: this.getHeaders()})
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
 
   private getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
