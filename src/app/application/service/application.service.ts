@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Application, Criticity, CycleLife, ItSolution, Note, Personne} from '../model/Application';
+import {Application, Criticity, CycleLife, ItSolution, Note, OrganizationIdent, Responsable} from '../model/Application';
 import {map} from 'rxjs/operators';
 import {ApiService} from '../../main/service/api.service';
 
@@ -11,7 +11,7 @@ import {ApiService} from '../../main/service/api.service';
 export class ApplicationService {
 
   private applicationSubject: BehaviorSubject<Application> = new BehaviorSubject<Application>(new Application('', '',
-    '', null, null, null, null, []));
+    '', null, null, null, null, null, []));
   public applicationObservable: Observable<Application> = this.applicationSubject.asObservable();
   private applicationUrl = '/applications/';
 
@@ -27,15 +27,17 @@ export class ApplicationService {
   }
 
   private buildApplication(applicationResponse: Application): Application {
-    const personne = new Personne(applicationResponse.personne.uid,
-      applicationResponse.personne.firstName,
-      applicationResponse.personne.lastName);
+    const responsable = new Responsable(applicationResponse.responsable.uid,
+      applicationResponse.responsable.firstName,
+      applicationResponse.responsable.lastName);
     const cycleLife = new CycleLife(applicationResponse.cycleLife.state, applicationResponse.cycleLife.dateOfCreation,
       applicationResponse.cycleLife.dateOfLastUpdate,
       applicationResponse.cycleLife.dateEndInReality);
     const itSolution = new ItSolution(applicationResponse.itSolution.typeOfSolution,
-      applicationResponse.itSolution.labelSourcingMode,
-      applicationResponse.itSolution.nameOfFirware);
+      applicationResponse.itSolution.labelOfSourcingMode,
+      applicationResponse.itSolution.nameOfFirmware);
+    const organizationIdent = new OrganizationIdent(applicationResponse.organizationIdent.idRefog,
+      applicationResponse.organizationIdent.name);
     const criticity = new Criticity(applicationResponse.criticity.privilegeInformation,
       applicationResponse.criticity.personalData,
       applicationResponse.criticity.serviceClass,
@@ -50,10 +52,11 @@ export class ApplicationService {
     return new Application(applicationResponse.codeApplication,
       applicationResponse.shortDescription,
       applicationResponse.longDescription,
-      personne,
+      responsable,
       cycleLife,
       itSolution,
       criticity,
+      organizationIdent,
       notes);
   }
 
@@ -64,21 +67,27 @@ export class ApplicationService {
     const cyclelifeBidon: CycleLife = new CycleLife('active', dateb, dateup, null);
     const criticityBidon: Criticity = new Criticity('oui', 'non', 'C3', 'h24', '1j:01h:25min', '5j:5h:5min');
     const itSolutionBidon: ItSolution = new ItSolution('maison', 'easy', 'ibm');
-    const personneBidon: Personne = new Personne('123123', 'John', 'Doe');
+    const personneBidon: Responsable = new Responsable('123123', 'John', 'Doe');
     const note1: Note = new Note('note1', 'blablabla1', dateb);
-    const note2: Note = new Note('note2', 'encore plus blabla', dateup );
+    const note2: Note = new Note('note2', 'encore plus blabla', dateup);
     const note3: Note = new Note('note1', 'blablabla1', dateb);
-    const note4: Note = new Note('note2', 'encore plus blabla', dateup );
+    const note4: Note = new Note('note2', 'encore plus blabla', dateup);
     const note5: Note = new Note('note1', 'blablabla1', dateb);
-    const note6: Note = new Note('note2', 'encore plus blabla', dateup );
+    const note6: Note = new Note('note2', 'encore plus blabla', dateup);
     const note7: Note = new Note('note1', 'blablabla1', dateb);
     const note8: Note = new Note('note2', 'encore plus blabla blalalalalbabababababababbaba' +
       'uiouuupuououoiuuoupupuouoiuoupuupoupouoiu' +
-      'ruoiurououupuopup', dateup );
-    const notesBidon = [note1 , note2, note3 , note4 , note5, note6, note7, note8 ] ;
+      'ruoiurououupuopup', dateup);
+    const organizationIdentBidon: OrganizationIdent = new OrganizationIdent('121245', 'test orga');
+    const notesBidon = [note1, note2, note3, note4, note5, note6, note7, note8];
     const applicationBidon: Application = new Application('Ap000001', 'appliTest',
-      'application Test', personneBidon, cyclelifeBidon, itSolutionBidon, criticityBidon, notesBidon);
+      'application Test', personneBidon, cyclelifeBidon, itSolutionBidon, criticityBidon, organizationIdentBidon, notesBidon);
     this.applicationSubject.next(applicationBidon);
+  }
+
+  // tslint:disable-next-line:typedef
+  createNote(note: Note) {
+    console.log('creation Note service');
   }
 
 

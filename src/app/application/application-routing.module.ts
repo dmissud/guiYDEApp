@@ -4,9 +4,9 @@ import {ApplicationComponent} from './view/application/application.component';
 
 
 
+
 const routes: Routes = [
   {path: '', component: ApplicationComponent}
-
 ];
 
 @NgModule({

@@ -9,6 +9,8 @@ import {ItsolutionComponent} from './view/itsolution/itsolution.component';
 import {CriticityComponent} from './view/criticity/criticity.component';
 import {PersonneComponent} from './view/personne/personne.component';
 import {NotesComponent} from './view/notes/notes.component';
+import {FormsModule} from '@angular/forms';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import {NotesComponent} from './view/notes/notes.component';
   imports: [
     CommonModule,
     ApplicationRoutingModule,
-    PrimengModule
+    PrimengModule,
+    FormsModule,
+    ConfirmDialogModule
   ]
 })
 export class ApplicationModule {

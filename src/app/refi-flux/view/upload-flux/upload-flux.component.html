@@ -1,6 +1,6 @@
 <div class="p-text-center"><br/><h4>Chargement d'un nouveau Flux en provenance du REFi</h4></div>
 <p-fileUpload name="fluxRefi" [url]="url" (onUpload)="onUpload($event)"
-              multiple="single" accept="text/csv" maxFileSize="10000000" fileLimit="1" [headers]="httpHeaders">
+              multiple="single"  maxFileSize="10000000" fileLimit="1" [headers]="httpHeaders">
   <ng-template pTemplate="content">
     <ul *ngIf="uploadedFiles.length">
       <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>

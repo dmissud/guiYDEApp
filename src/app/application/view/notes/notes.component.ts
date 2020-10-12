@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Note} from '../../model/Application';
+import {ApplicationService} from '../../service/application.service';
 
 
 
@@ -10,15 +11,20 @@ import {Note} from '../../model/Application';
 })
 export class NotesComponent implements OnInit {
 
-  constructor() {
+  constructor(private applicationService: ApplicationService) {
 
   }
 
   @Input() notes: Note[];
 
   $noteDisplay: Note;
+  $addNote: boolean;
 
   displayNote: boolean;
+  addNote: boolean;
+  note: Note;
+  noteDialog: boolean;
+  submitted: boolean;
 
 
   // tslint:disable-next-line:typedef
@@ -31,6 +37,38 @@ export class NotesComponent implements OnInit {
     this.displayNote = true;
     this.$noteDisplay = note;
 
+
+  }
+
+  // tslint:disable-next-line:typedef
+  openNew() {
+    const today: Date = new Date();
+    today.getDate();
+    this.note = new Note('', '' ,  today );
+    this.noteDialog = true;
+    this.submitted = true;
+
+  }
+  // tslint:disable-next-line:typedef
+  editNote(note: Note) {
+    this.note = note;
+    this.noteDialog = true;
+  }
+  // tslint:disable-next-line:typedef
+  hideDialog() {
+    this.noteDialog = false;
+    this.submitted = false;
+  }
+
+  // tslint:disable-next-line:typedef
+  saveNote() {
+    this.submitted = true;
+    console.log('creation en cours' + this.note);
+    this.applicationService.createNote(this.note);
+    this.noteDialog = false;
+    const today: Date = new Date();
+    today.getDate();
+    this.note = new Note('', '' ,  today );
 
   }
 }

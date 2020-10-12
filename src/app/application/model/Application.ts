@@ -2,22 +2,24 @@ export class Application {
   codeApplication: string;
   shortDescription: string;
   longDescription: string;
-  personne: Personne;
+  responsable: Responsable;
   cycleLife: CycleLife;
   itSolution: ItSolution;
   criticity: Criticity;
+  organizationIdent: OrganizationIdent;
   notes: Note[];
 
 
-  constructor(codeApplication: string, shortDescription: string, longDescription: string, personne: Personne,
-              cycleLife: CycleLife, itSolution: ItSolution, criticity: Criticity, notes: Note[]) {
+  constructor(codeApplication: string, shortDescription: string, longDescription: string, responsable: Responsable,
+              cycleLife: CycleLife, itSolution: ItSolution, criticity: Criticity, organizationIdent: OrganizationIdent, notes: Note[]) {
     this.codeApplication = codeApplication;
     this.shortDescription = shortDescription;
     this.longDescription = longDescription;
-    this.personne = personne;
+    this.responsable = responsable;
     this.cycleLife = cycleLife;
     this.itSolution = itSolution;
     this.criticity = criticity;
+    this.organizationIdent = organizationIdent;
     this.notes = notes;
   }
 
@@ -29,7 +31,7 @@ export class Application {
 
 }
 
-export class Personne {
+export class Responsable {
   uid: string;
   firstName: string;
   lastName: string;
@@ -56,15 +58,15 @@ export class CycleLife {
   }
 }
 
-export class  ItSolution {
+export class ItSolution {
   typeOfSolution: string;
-  nameOfFirware: string;
-  labelSourcingMode: string;
+  nameOfFirmware: string;
+  labelOfSourcingMode: string;
 
-  constructor(typeOfSolution: string, nameOfFirware: string, labelSourcingMode: string) {
+  constructor(typeOfSolution: string, nameOfFirmware: string, labelOfSourcingMode: string) {
     this.typeOfSolution = typeOfSolution;
-    this.nameOfFirware = nameOfFirware;
-    this.labelSourcingMode = labelSourcingMode;
+    this.nameOfFirmware = nameOfFirmware;
+    this.labelOfSourcingMode = labelOfSourcingMode;
   }
 }
 
@@ -83,6 +85,17 @@ export class Criticity {
     this.aviability = aviability;
     this.rpo = rpo;
     this.rto = rto;
+  }
+}
+
+export class OrganizationIdent {
+  idRefog: string;
+  name: string;
+
+
+  constructor(idRefog: string, name: string) {
+    this.idRefog = idRefog;
+    this.name = name;
   }
 }
 
