@@ -14,11 +14,11 @@ export class Auth {
   }
 
   isUser(): boolean {
-    return this.grants.includes(`USER`);
+    return this.grants.includes(`ROLE_USER`);
   }
 
   isAdmin(): boolean {
-    return this.grants.includes(`ADMIN`);
+    return this.grants.includes(`ROLE_ADMIN`);
   }
 
   giveToken(): string {
