@@ -49,6 +49,7 @@ export class AuthService {
   }
 
   saveAuth(auth: Auth): void {
+    console.log(auth);
     localStorage.setItem(this.ydeAuth, JSON.stringify(auth));
     this.userLoggedSubject.next(auth);
   }
