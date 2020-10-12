@@ -3,25 +3,25 @@
 <div class="card">
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h3 class="p-m-0">Liste des utilisateurs</h3>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <label>
+          <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText class="p-mr-2" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
+          </span>
+      </label>
       <button pButton pRipple label="Ajouter utilisateur" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-      <button pButton pRipple label="Supprimer utilisateur" icon="pi pi-minus" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
+      <button pButton pRipple  icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
     </ng-template>
   </p-toolbar>
 
   <p-table #dt [value]="(users$ | async)" [rows]="10" [paginator]="true" styleClass="p-datatable-lg" [globalFilterFields]="['lastName','uid','admin','user']"
            [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
            currentPageReportTemplate="Utilisateurs {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true">
-    <ng-template pTemplate="caption">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        <h3 class="p-m-0">Liste des utilisateurs</h3>
-        <label>
-          <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
-          </span>
-        </label>
-      </div>
-    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
@@ -30,8 +30,8 @@
         <th pSortableColumn="lastName">Nom <p-sortIcon field="lastName"></p-sortIcon></th>
         <th pSortableColumn="firstName">Prénom <p-sortIcon field="firstName"></p-sortIcon></th>
         <th pSortableColumn="uid">UID <p-sortIcon field="uid"></p-sortIcon></th>
-        <th pSortableColumn="rolesAdmin">Role Admin<p-sortIcon field="rolesAdmin"></p-sortIcon></th>
-        <th pSortableColumn="rolesUser">Role User<p-sortIcon field="rolesUser"></p-sortIcon></th>
+        <th>Role Admin</th>
+        <th>Role User</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-user >

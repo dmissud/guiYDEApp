@@ -22,7 +22,7 @@ import {CardModule} from 'primeng/card';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TooltipModule} from 'primeng/tooltip';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
@@ -90,7 +90,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     TooltipModule,
     ConfirmDialogModule
   ],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class PrimengModule {
 }
