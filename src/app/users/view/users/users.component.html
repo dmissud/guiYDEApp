@@ -1,1 +1,101 @@
-<p>users works!</p>
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="Ajouter utilisateur" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+      <button pButton pRipple label="Supprimer utilisateur" icon="pi pi-minus" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
+    </ng-template>
+
+
+  </p-toolbar>
+
+  <p-table #dt [value]="(users$ | async)" [rows]="3" [paginator]="true" styleClass="p-datatable-lg" [globalFilterFields]="['lastName','uid','admin','user']"
+           [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="Utilisateurs {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h3 class="p-m-0">Liste des utilisateurs</h3>
+        <label>
+          <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
+          </span>
+        </label>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="lastName">Nom <p-sortIcon field="lastName"></p-sortIcon></th>
+        <th pSortableColumn="firstName">Prénom <p-sortIcon field="firstName"></p-sortIcon></th>
+        <th pSortableColumn="uid">UID <p-sortIcon field="uid"></p-sortIcon></th>
+        <th pSortableColumn="rolesAdmin">Role Admin<p-sortIcon field="rolesAdmin"></p-sortIcon></th>
+        <th pSortableColumn="rolesUser">Role User<p-sortIcon field="rolesUser"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user >
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="user"></p-tableCheckbox>
+          </td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.uid }}</td>
+          <td><p-inputSwitch [(ngModel)]="user.isAdmin" [disabled]="true"></p-inputSwitch></td>
+          <td><p-inputSwitch [(ngModel)]="user.isUser" [disabled]="true"></p-inputSwitch></td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editUser(user)"></button>
+          </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        Au total il y a {{(users$ | async) ? (users$ | async).length : 0 }} utilisateurs.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="Nouvel utilisateur" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="lastName">Nom</label>
+      <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus />
+      <small class="p-invalid" *ngIf="submitted && !user.lastName">Le nom est obligatoire.</small>
+    </div>
+    <div class="p-field">
+      <label for="firstName">Prénom</label>
+      <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required/>
+      <small class="p-invalid" *ngIf="submitted && !user.firstName">Le prénom est obligatoire.</small>
+    </div>
+    <div class="p-field">
+      <label for="uid">UID</label>
+      <input type="text" pInputText id="uid" [(ngModel)]="user.uid" required />
+      <small class="p-invalid" *ngIf="submitted && !user.uid">l'UID est obligatoire</small>
+    </div>
+
+    <div class="p-field">
+      <label class="p-mb-3">Roles</label>
+      <div class="p-formgrid p-grid">
+        <div class="p-field-radiobutton p-col-6">
+          <p-inputSwitch id="roleAdmin" name="admin" [(ngModel)]="user.isAdmin"></p-inputSwitch>
+          <label for="roleAdmin">Administrateur</label>
+        </div>
+        <div class="p-field-radiobutton p-col-6">
+          <p-inputSwitch id="roleUser" name="user" [(ngModel)]="user.isUser"></p-inputSwitch>
+          <label for="roleUser">Utilisateur</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

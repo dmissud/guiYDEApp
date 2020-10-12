@@ -3,7 +3,10 @@ import {Observable, Subscription} from 'rxjs';
 import {Auth} from '../../../main/model/Auth';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../main/service/auth.service';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
+import {User} from '../../model/user';
+import {UserService} from '../../service/users.service';
+import {NotificationService} from '../../../main/service/notification.service';
 
 @Component({
   selector: 'app-users',
@@ -11,25 +14,79 @@ import {MessageService} from 'primeng/api';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  user$: Observable<Auth>;
-  private userSubsciption: Subscription;
+  auth$: Observable<Auth>;
+  private authSubscription: Subscription;
+
+  userDialog: boolean;
+
+  users: User[];
+  users$: Observable<User[]>;
+  user: User;
+  selectedUsers: User[];
+  submitted: boolean;
 
   constructor(private router: Router,
               private authService: AuthService,
-              private messageService: MessageService) {
+              private messageService: NotificationService,
+              private userService: UserService,
+              private confirmationService: ConfirmationService) {
+    this.users$ = this.userService.usersObservable;
   }
 
   ngOnInit(): void {
-    this.user$ = this.authService.userLogged;
-    this.userSubsciption = this.user$.subscribe(() => {
+    console.log('User ngOnInit');
+    this.auth$ = this.authService.userLogged;
+    this.authSubscription = this.auth$.subscribe(() => {
       if (!this.authService.userIsAdmin) {
-        this.messageService.add({severity: 'warn', summary: 'Right', detail: 'Not Allowed'});
+        this.messageService.notify( 'warn', 'Right', 'Not Allowed');
         this.router.navigate(['']);
+      }
+    });
+    this.userService.getUsers();
+
+  }
+
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
+  }
+
+
+  openNew(): void {
+    this.user = new User('', '', '', '', []);
+    this.submitted = false;
+    this.userDialog = true;
+  }
+
+  deleteSelectedUsers(): void {
+    this.confirmationService.confirm({
+      message: 'Confirmez-vous la suppression de ' + this.selectedUsers.length + ' utilisateur(s) ?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.userService.deleteUsers(this.selectedUsers);
+        this.selectedUsers = null;
+        this.messageService.notify('success', 'Successful', 'Users Deleted');
       }
     });
   }
 
-  ngOnDestroy(): void {
-    this.userSubsciption.unsubscribe();
+  editUser(user: User): void {
+    this.user = user;
+    this.userDialog = true;
+  }
+
+  hideDialog(): void {
+    this.userDialog = false;
+    this.submitted = false;
+  }
+
+  saveUser(): void {
+    this.submitted = true;
+
+    if (this.user.lastName.trim()) {
+      this.userService.addOrUpdate(this.user);
+      this.userDialog = false;
+      this.user = new User('', '', '', '', []);
+    }
   }
 }
