@@ -14,6 +14,7 @@ export class User {
     this.roles = roles;
   }
 
+  // Getter /Setter isAdmin
   get isAdmin(): boolean {
     return this.roles.includes('ROLE_ADMIN');
   }
