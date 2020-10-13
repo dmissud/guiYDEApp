@@ -17,7 +17,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
   uid: string;
   isLoading$: Observable<boolean>;
   private applicationItems: MenuItem;
-  private usersItems: MenuItem;
   private adminItems: MenuItem;
   private userSubsciption: Subscription;
 
@@ -53,8 +52,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
         icon: 'pi yde-theme yde-logo',
         routerLink: '/'
       },
-      this.applicationItems,
-      this.usersItems,
+      // this.applicationItems,
       this.adminItems
     ];
   }
@@ -77,12 +75,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
         }
       ]
     };
-    this.usersItems = {
-      label: 'Utilisateur',
-      icon: 'pi pi-fw pi-users',
-      visible: isAdmin,
-      routerLink: '/users'
-    };
     this.adminItems = {
       label: 'Administration',
       icon: 'pi yde-theme yde-admin',
@@ -92,6 +84,11 @@ export class TopbarComponent implements OnInit, OnDestroy {
           label: 'Importation REFi',
           icon: 'pi pi-fw pi-upload',
           routerLink: '/refi'
+        },
+        {
+          label: 'Utilisateurs',
+          icon: 'pi pi-fw pi-users',
+          routerLink: '/users'
         },
         {
           label: 'Organisations',

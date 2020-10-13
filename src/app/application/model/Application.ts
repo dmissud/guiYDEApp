@@ -99,6 +99,11 @@ export class OrganizationIdent {
   }
 }
 
+export interface NoteContent {
+  noteTitle: string;
+  noteContent: string;
+}
+
 export class Note {
   noteTitle: string;
   noteContent: string;
