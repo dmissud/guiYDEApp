@@ -3,8 +3,6 @@ import {Note} from '../../model/Application';
 import {ApplicationService} from '../../service/application.service';
 
 
-
-
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -25,6 +23,7 @@ export class NotesComponent implements OnInit {
   addNote: boolean;
   note: Note;
   noteDialog: boolean;
+  noteDialogDel: boolean;
   submitted: boolean;
 
 
@@ -43,22 +42,28 @@ export class NotesComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   openNew() {
-    this.note = new Note('', '' ,  null );
+    this.note = new Note('', '', null);
     this.noteDialog = true;
     this.submitted = true;
 
   }
+
   // tslint:disable-next-line:typedef
   editNote(note: Note) {
     this.note = note;
     this.noteDialog = true;
   }
+
   // tslint:disable-next-line:typedef
   hideDialog() {
     this.noteDialog = false;
     this.submitted = false;
   }
 
+  editNotedelete(note: Note) {
+    this.note = note;
+    this.noteDialogDel = true;
+  }
   // tslint:disable-next-line:typedef
   saveNote() {
     this.submitted = true;
@@ -66,7 +71,16 @@ export class NotesComponent implements OnInit {
     this.applicationService.createNote(this.note);
     this.noteDialog = false;
     const initDate: Date = new Date(0);
-    this.note = new Note('', '' ,  initDate );
+    this.note = new Note('', '', initDate);
 
   }
+
+  // tslint:disable-next-line:typedef
+  deleteNote(note: Note) {
+    console.log( 'delete' + this.note + this.note.noteTitle);
+    this.submitted = true;
+    this.applicationService.deleteNote(this.note);
+    this.noteDialog = false;
+  }
+
 }

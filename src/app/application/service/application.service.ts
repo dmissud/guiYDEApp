@@ -3,7 +3,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Application, Criticity, CycleLife, ItSolution, Note, OrganizationIdent, Responsable} from '../model/Application';
 import {map} from 'rxjs/operators';
 import {ApiService} from '../../main/service/api.service';
-
+import {HttpClient} from '@angular/common/http';
+import {NotificationService} from '../../main/service/notification.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import {ApiService} from '../../main/service/api.service';
 export class ApplicationService {
 
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private http: HttpClient, private messageService: NotificationService) {
   }
 
   // @ts-ignore
@@ -54,7 +55,7 @@ export class ApplicationService {
   }
 
   // tslint:disable-next-line:typedef
-   loadApplicationBidon() {
+  loadApplicationBidon() {
     const dateb = new Date('01-01-2020');
     const dateup = new Date('01-05-2020');
     const cyclelifeBidon: CycleLife = new CycleLife('active', dateb, dateup, null);
@@ -79,8 +80,7 @@ export class ApplicationService {
   }
 
 
-  // tslint:disable-next-line:typedef
-  createNote(note: Note) {
+  createNote(note: Note): void {
     console.log('creation Note service');
     console.log('creation Note service' + note.noteTitle + ' ' + note.noteCreationDate);
     const dateCreate: Date = new Date();
@@ -90,14 +90,25 @@ export class ApplicationService {
       note.noteCreationDate = dateCreate;
       this.api.post(this.applicationUrl + this.codeApplication + '/notes/', note)
         // tslint:disable-next-line:no-shadowed-variable
-        .subscribe (() =>
+        .subscribe(() =>
           this.loadApplication(this.codeApplication)
         );
     } else {
       console.log('update');
-      return this.api.put(this.applicationUrl + this.codeApplication + '/notes/' + note.noteTitle, note);
+      // const content = new Object(note.noteContent);
+      this.api.put(this.applicationUrl + this.codeApplication + '/notes/' + note.noteTitle, {noteContent: note.noteContent})
+        .subscribe(() =>
+          this.loadApplication(this.codeApplication)
+        );
     }
 
+  }
+
+  // tslint:disable-next-line:typedef
+  deleteNote(note: Note) {
+    console.log('delete' + note.noteTitle);
+    this.api.delete(this.applicationUrl + this.codeApplication + '/notes/' + note.noteTitle)
+      .subscribe(() => this.loadApplication(this.codeApplication));
   }
 
 
