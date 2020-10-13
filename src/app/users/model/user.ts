@@ -30,6 +30,8 @@ export class User {
       }
     }
   }
+
+  // Getter /Setter isUser
   get isUser(): boolean {
     return this.roles.includes('ROLE_USER');
   }
