@@ -20,21 +20,32 @@ export class ApiService {
       .pipe(catchError(error => this.handleError(error)));
   }
 
-  post(url: string, body: object): Observable<any> {
-    return this.http.post(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders()})
+  post(url: string, body: object, urlParams?: HttpParams): Observable<any> {
+    return this.http.post(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
-  put(url: string, body: object): Observable<any> {
-    return this.http.put(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders()})
+  put(url: string, body: object, urlParams?: HttpParams): Observable<any> {
+    return this.http.put(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
-  delete(url: string): Observable<any> {
-    return this.http.delete(this.ydeAppUrl + url, {headers: this.getHeaders()})
+  delete(url: string, urlParams?: HttpParams): Observable<any> {
+    return this.http.delete(this.ydeAppUrl + url, {headers: this.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
+  uploadFile(url: string, fluxRefi: File, name: string): Observable<any> {
+    const formData = new FormData();
+    formData.append(name, fluxRefi);
+
+    return this.http.post(this.ydeAppUrl + url, formData,
+      {
+        observe: 'response',
+        reportProgress: true
+      })
+      .pipe(catchError(error => this.handleError(error)));
+  }
 
   private getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
@@ -47,8 +58,6 @@ export class ApiService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error}`);

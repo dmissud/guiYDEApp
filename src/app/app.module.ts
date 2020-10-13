@@ -16,6 +16,7 @@ import {LoadingInterceptor} from './main/service/loading.interceptor';
 import {TokenInterceptor} from './main/service/token.interceptor';
 import {UsersModule} from './users/users.module';
 import {NotificationComponent} from './main/view/notification/notification.component';
+import {LoggingInterceptor} from './main/service/logging.interceptor';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {NotificationComponent} from './main/view/notification/notification.compo
   bootstrap: [AppComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ]
 })
