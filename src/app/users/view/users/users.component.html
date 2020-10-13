@@ -11,15 +11,19 @@
       <label>
           <span class="p-input-icon-left">
               <i class="pi pi-search"></i>
-              <input pInputText class="p-mr-2" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
+              <input pInputText class="p-mr-2" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                     placeholder="Rechercher..."/>
           </span>
       </label>
-      <button pButton pRipple label="Ajouter utilisateur" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-      <button pButton pRipple  icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
+      <button pButton pRipple label="Ajouter utilisateur" icon="pi pi-plus" class="p-button-success p-mr-2"
+              (click)="openNew()"></button>
+      <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsers()"
+              [disabled]="!selectedUsers || !selectedUsers.length"></button>
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [value]="(users$ | async)" [rows]="10" [paginator]="true" styleClass="p-datatable-lg" [globalFilterFields]="['lastName','uid','admin','user']"
+  <p-table #dt [value]="(users$ | async)" [rows]="10" [paginator]="true" styleClass="p-datatable-lg"
+           [globalFilterFields]="['lastName','uid','admin','user']"
            [(selection)]="selectedUsers" [rowHover]="true" dataKey="uid"
            currentPageReportTemplate="Utilisateurs {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true">
     <ng-template pTemplate="header">
@@ -27,27 +31,38 @@
         <th style="width: 3rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <th pSortableColumn="uid">UID <p-sortIcon field="uid"></p-sortIcon></th>
-        <th pSortableColumn="lastName">Nom <p-sortIcon field="lastName"></p-sortIcon></th>
-        <th pSortableColumn="firstName">Prénom <p-sortIcon field="firstName"></p-sortIcon></th>
+        <th pSortableColumn="uid">UID
+          <p-sortIcon field="uid"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastName">Nom
+          <p-sortIcon field="lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="firstName">Prénom
+          <p-sortIcon field="firstName"></p-sortIcon>
+        </th>
         <th>Role Admin</th>
         <th>Role User</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-user >
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="user"></p-tableCheckbox>
-          </td>
-          <td>{{ user.uid }}</td>
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.firstName }}</td>
-          <td><p-inputSwitch [(ngModel)]="user.isAdmin" [disabled]="true"></p-inputSwitch></td>
-          <td><p-inputSwitch [(ngModel)]="user.isUser" [disabled]="true"></p-inputSwitch></td>
-          <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editUser(user)"></button>
-          </td>
-        </tr>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="user"></p-tableCheckbox>
+        </td>
+        <td>{{ user.uid }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>
+          <p-inputSwitch [(ngModel)]="user.isAdmin" [disabled]="true"></p-inputSwitch>
+        </td>
+        <td>
+          <p-inputSwitch [(ngModel)]="user.isUser" [disabled]="true"></p-inputSwitch>
+        </td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                  (click)="editUser(user)"></button>
+        </td>
+      </tr>
     </ng-template>
     <ng-template pTemplate="summary">
       <div class="p-d-flex p-ai-center p-jc-between">
@@ -57,11 +72,12 @@
   </p-table>
 </div>
 
-<p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="Nouvel utilisateur" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="Nouvel utilisateur" [modal]="true"
+          styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
       <label for="lastName">Nom</label>
-      <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus />
+      <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus/>
       <small class="p-invalid" *ngIf="submitted && !user.lastName">Le nom est obligatoire.</small>
     </div>
     <div class="p-field">
@@ -71,7 +87,7 @@
     </div>
     <div class="p-field">
       <label for="uid">UID</label>
-      <input type="text" pInputText id="uid" [(ngModel)]="user.uid" required />
+      <input type="text" pInputText id="uid" [(ngModel)]="user.uid" required/>
       <small class="p-invalid" *ngIf="submitted && !user.uid">l'UID est obligatoire</small>
     </div>
 
@@ -89,10 +105,47 @@
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="userMajDialog" [style]="{width: '450px'}" header="Mise à jour utilisateur" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="lastNameMaj">Nom</label>
+      <input type="text" pInputText id="lastNameMaj" [(ngModel)]="user.lastName" required autofocus />
+      <small class="p-invalid" *ngIf="submitted && !user.lastName">Le nom est obligatoire.</small>
+    </div>
+    <div class="p-field">
+      <label for="firstNameMaj">Prénom</label>
+      <input type="text" pInputText id="firstNameMaj" [(ngModel)]="user.firstName" required/>
+      <small class="p-invalid" *ngIf="submitted && !user.firstName">Le prénom est obligatoire.</small>
+    </div>
+    <div class="p-field">
+      <label for="uidMaj">UID</label>
+      <input type="text" pInputText id="uidMaj" [(ngModel)]="user.uid" [disabled]="true" />
+    </div>
+
+    <div class="p-field">
+      <label class="p-mb-3">Roles</label>
+      <div class="p-formgrid p-grid">
+        <div class="p-field-radiobutton p-col-6">
+          <p-inputSwitch id="roleAdminMaj" name="admin" [(ngModel)]="user.isAdmin"></p-inputSwitch>
+          <label for="roleAdminMaj">Administrateur</label>
+        </div>
+        <div class="p-field-radiobutton p-col-6">
+          <p-inputSwitch id="roleUserMaj" name="user" [(ngModel)]="user.isUser"></p-inputSwitch>
+          <label for="roleUserMaj">Utilisateur</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogMaj()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateUser()"></button>
   </ng-template>
 </p-dialog>
 

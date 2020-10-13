@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {User} from '../model/user';
+import {IUser, User} from '../model/user';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {NotificationService} from '../../main/service/notification.service';
@@ -22,77 +22,52 @@ export class UserService {
   constructor(private http: HttpClient, private api: ApiService, private messageService: NotificationService) {
   }
 
-  /*getUsersSmall(): any {
-    return this.http.get<any>('assets/users-small.json')
-      .toPromise()
-      .then(res => res.data as User[])
-      .then(data => data);
-  }*/
-
   getUsers(): void {
     this.api.get(this.getUsersUrl)
-      .pipe(map((response: any) => {
-        return response as User[];
+      .pipe(map((response: IUser[]) => {
+        return response.map((iuser: IUser) => new User(iuser.uid, iuser.lastName, iuser.firstName, iuser.roles));
       }))
-      .subscribe(lstUserHttp => this.usersBehaviorSubject.next(lstUserHttp));
+      .subscribe((lstUserHttp: User[]) => this.usersBehaviorSubject.next(lstUserHttp));
   }
 
   deleteUsers(selectedUsers: User[]): void {
-
-    for (let i = 0; i < selectedUsers.length; i++) {
-      const selectedUser: User = selectedUsers[i];
+    for (const selectedUser of selectedUsers) {
       this.api.delete(this.UseCaseUserUrl + selectedUser.uid)
-        .subscribe(() => this.getUsers());
-      console.log('URL : ', this.UseCaseUserUrl + selectedUser.uid);
+        .subscribe(() => {
+          this.getUsers();
+          this.messageService.notify('success', 'Successful', 'Utilisateur' + selectedUser + ' supprimé');
+        });
     }
   }
 
   update(user: User): void {
-    const lstUser: User[] = this.usersBehaviorSubject.getValue();
-
-    const index = this.findIndexByUid(lstUser, user.uid);
     if (user.lastName.trim()) {
-      console.log('user.uid = ', user.uid);
-      console.log('index = ', index);
-      console.log('lstUser = ', lstUser[index]);
-
-      lstUser[this.findIndexByUid(lstUser, user.uid)] = user;
-      this.api.put(this.UseCaseUserUrl + user.uid, {
-        firstName: user.firstName, lastName: user.lastName,
-        password: user.password, roles: user.roles
-      })
-        .subscribe(() => this.getUsers());
-      this.messageService.notify('success', 'Successful', 'User Updated');
+      const iuser: IUser = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        roles: user.roles
+      };
+      this.api.put(this.UseCaseUserUrl + user.uid, iuser)
+        .subscribe(() => {
+          this.messageService.notify('success', 'Successful', 'Utilisateur mis à jour');
+          this.getUsers();
+        });
     }
   }
 
   add(user: User): void {
-    let lstUser: User[] = this.usersBehaviorSubject.getValue();
-    lstUser = [user, ...lstUser];
-    console.log('Création en cours', user.uid);
-    this.api.post(this.getUsersUrl, user).subscribe(() => this.getUsers());
-    this.messageService.notify('success', 'Successful', 'User created');
-    this.usersBehaviorSubject.next(lstUser);
+    const iuser: IUser = {
+      uid: user.uid,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      password: '',
+      roles: user.roles
+    };
+    this.api.post(this.getUsersUrl, iuser).subscribe(() => {
+      this.messageService.notify('success', 'Successful', 'Utilisateur créé');
+      this.getUsers();
+    });
   }
 
-  findIndexByUid(users: User[], uid: string): number {
-    let index = -1;
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].uid === uid) {
-        index = i;
-        break;
-      }
-    }
 
-    return index;
-  }
-
-  createId(): string {
-    let id = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-  }
 }
