@@ -1,51 +1,37 @@
+export interface IUser {
+  uid?: string;
+  lastName: string;
+  firstName: string;
+  roles: string[];
+}
+
 export class User {
   uid: string;
   lastName: string;
   firstName: string;
-  password: string;
-  roles: string[];
+  isUser: boolean;
+  isAdmin: boolean;
 
-  constructor(uid: string, lastName: string, firstName: string, password: string, roles: string[]) {
+  constructor(uid: string, lastName: string, firstName: string,  roles: string[]) {
     this.uid = uid;
     this.lastName = lastName;
     this.firstName = firstName;
-    this.password = password;
     this.roles = roles;
   }
 
-  // Getter /Setter isAdmin
-  get isAdmin(): boolean {
-    return this.roles.includes('ROLE_ADMIN');
-  }
-  set isAdmin(admin: boolean) {
-    if (admin) {
-      if (!this.roles.includes('ROLE_ADMIN')) {
-        console.log('isAdmin add');
-        this.roles = ['ROLE_ADMIN', ...this.roles];
-      }
-    } else {
-      if (this.roles.includes('ROLE_ADMIN')) {
-        console.log('isAdmin remove');
-        this.roles.splice(this.roles.indexOf('ROLE_ADMIN'), 1);
-      }
+  get roles(): string[] {
+    let roles: string[] = [];
+    if (this.isAdmin) {
+      roles = ['ROLE_ADMIN', ...roles];
     }
+    if (this.isUser) {
+      roles = ['ROLE_USER', ...roles];
+    }
+    return roles;
   }
 
-  // Getter /Setter isUser
-  get isUser(): boolean {
-    return this.roles.includes('ROLE_USER');
-  }
-  set isUser(user: boolean) {
-    if (user) {
-      if (!this.roles.includes('ROLE_USER')) {
-        console.log('isUser  add');
-        this.roles = ['ROLE_USER', ...this.roles];
-      }
-    } else {
-      if (this.roles.includes('ROLE_USER')) {
-        console.log('isUser  remove');
-        this.roles.splice(this.roles.indexOf('ROLE_USER'), 1);
-      }
-    }
+  set roles(roles: string[]) {
+    this.isAdmin = roles.includes('ROLE_ADMIN');
+    this.isUser = roles.includes('ROLE_USER');
   }
 }

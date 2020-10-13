@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   openNew(): void {
-    this.user = new User('', '', '', 'YDE_user', []);
+    this.user = new User('', '', '',  []);
     this.submitted = false;
     this.userDialog = true;
   }
@@ -90,10 +90,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   saveUser(): void {
     console.log('save User : ', this.user);
     this.submitted = true;
-    this.user.password = 'YDE_user';
     this.userService.add(this.user);
     this.userDialog = false;
-    this.user = new User('', '', '', 'YDE_user', []);
+    this.user = new User('', '', '',  []);
   }
 
   updateUser(): void {
@@ -102,7 +101,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.user.isAdmin = false;
     console.log('save User : ', this.user.roles);
     this.submitted = true;
-    this.user.password = 'YDE_user';
     this.userService.update(this.user);
     this.userMajDialog = false;
     // this.user = new User('', '', '', 'YDE_user', []);
