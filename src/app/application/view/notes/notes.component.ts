@@ -4,6 +4,7 @@ import {ApplicationService} from '../../service/application.service';
 
 
 
+
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -16,9 +17,9 @@ export class NotesComponent implements OnInit {
   }
 
   @Input() notes: Note[];
-
   $noteDisplay: Note;
   $addNote: boolean;
+
 
   displayNote: boolean;
   addNote: boolean;
@@ -42,9 +43,7 @@ export class NotesComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   openNew() {
-    const today: Date = new Date();
-    today.getDate();
-    this.note = new Note('', '' ,  today );
+    this.note = new Note('', '' ,  null );
     this.noteDialog = true;
     this.submitted = true;
 
@@ -66,9 +65,8 @@ export class NotesComponent implements OnInit {
     console.log('creation en cours' + this.note);
     this.applicationService.createNote(this.note);
     this.noteDialog = false;
-    const today: Date = new Date();
-    today.getDate();
-    this.note = new Note('', '' ,  today );
+    const initDate: Date = new Date(0);
+    this.note = new Note('', '' ,  initDate );
 
   }
 }

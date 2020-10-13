@@ -29,7 +29,7 @@
         <p-button (click)="showNote(note)" icon="pi pi-search"></p-button>
 
         <p-dialog *ngIf="$noteDisplay" header="{{$noteDisplay.noteTitle}}" [(visible)]="displayNote"
-                  [style]="{width: '50vw'}"  [baseZIndex]="10000">
+                  [style]="{width: '100vw'}"  [baseZIndex]="100" >
           <p>{{$noteDisplay.noteContent}}</p>
 
         </p-dialog>

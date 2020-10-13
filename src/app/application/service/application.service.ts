@@ -5,53 +5,36 @@ import {map} from 'rxjs/operators';
 import {ApiService} from '../../main/service/api.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
 
-  private applicationSubject: BehaviorSubject<Application> = new BehaviorSubject<Application>(new Application('', '',
-    '', null, null, null, null, null, []));
-  public applicationObservable: Observable<Application> = this.applicationSubject.asObservable();
-  private applicationUrl = '/applications/';
 
   constructor(private api: ApiService) {
-    this.loadApplicationBidon();
   }
 
-  // tslint:disable-next-line:typedef
-  loadApplication(codeApplication: string) {
-    this.api.get(this.applicationUrl + codeApplication)
-      .pipe(map(applicationResponse => applicationResponse as Application))
-      .subscribe((application: Application) => this.applicationSubject.next(application));
-  }
+  // @ts-ignore
+  private applicationSubject: BehaviorSubject<Application> = new BehaviorSubject<Application>(ApplicationService.buildApplicationEmpty());
 
-  private buildApplication(applicationResponse: Application): Application {
-    const responsable = new Responsable(applicationResponse.responsable.uid,
-      applicationResponse.responsable.firstName,
-      applicationResponse.responsable.lastName);
-    const cycleLife = new CycleLife(applicationResponse.cycleLife.state, applicationResponse.cycleLife.dateOfCreation,
-      applicationResponse.cycleLife.dateOfLastUpdate,
-      applicationResponse.cycleLife.dateEndInReality);
-    const itSolution = new ItSolution(applicationResponse.itSolution.typeOfSolution,
-      applicationResponse.itSolution.labelOfSourcingMode,
-      applicationResponse.itSolution.nameOfFirmware);
-    const organizationIdent = new OrganizationIdent(applicationResponse.organizationIdent.idRefog,
-      applicationResponse.organizationIdent.name);
-    const criticity = new Criticity(applicationResponse.criticity.privilegeInformation,
-      applicationResponse.criticity.personalData,
-      applicationResponse.criticity.serviceClass,
-      applicationResponse.criticity.aviability,
-      applicationResponse.criticity.rpo,
-      applicationResponse.criticity.rto);
+  public applicationObservable: Observable<Application> = this.applicationSubject.asObservable();
+  private applicationUrl = '/applications/';
+  private codeApplication: string;
 
-    applicationResponse.notes.forEach((note: Note) => new Note(note.noteTitle, note.noteContent, note.noteCreationDate));
-    const notes: Note[] = applicationResponse.notes;
-    /*a revoir
-    */
-    return new Application(applicationResponse.codeApplication,
-      applicationResponse.shortDescription,
-      applicationResponse.longDescription,
+  private static buildApplicationEmpty(): Application {
+    const cycleLife: CycleLife = new CycleLife('', null, null, null);
+    const criticity: Criticity = new Criticity('', '', '', '', '', '');
+    const itSolution: ItSolution = new ItSolution('', '', '');
+    const responsable: Responsable = new Responsable('', '', '');
+
+    const organizationIdent: OrganizationIdent = new OrganizationIdent('', '');
+
+    const notes: Note[] = [];
+
+    return new Application('',
+      '',
+      '',
       responsable,
       cycleLife,
       itSolution,
@@ -61,7 +44,17 @@ export class ApplicationService {
   }
 
   // tslint:disable-next-line:typedef
-  loadApplicationBidon() {
+  loadApplication(codeApplication: string) {
+
+    this.codeApplication = codeApplication;
+    console.log('code app in' + codeApplication);
+    this.api.get(this.applicationUrl + codeApplication)
+      .pipe(map(applicationResponse => applicationResponse as Application))
+      .subscribe((application: Application) => this.applicationSubject.next(application));
+  }
+
+  // tslint:disable-next-line:typedef
+   loadApplicationBidon() {
     const dateb = new Date('01-01-2020');
     const dateup = new Date('01-05-2020');
     const cyclelifeBidon: CycleLife = new CycleLife('active', dateb, dateup, null);
@@ -85,9 +78,26 @@ export class ApplicationService {
     this.applicationSubject.next(applicationBidon);
   }
 
+
   // tslint:disable-next-line:typedef
   createNote(note: Note) {
     console.log('creation Note service');
+    console.log('creation Note service' + note.noteTitle + ' ' + note.noteCreationDate);
+    const dateCreate: Date = new Date();
+    dateCreate.getDate();
+    if (note.noteCreationDate == null) {
+      console.log('creation');
+      note.noteCreationDate = dateCreate;
+      this.api.post(this.applicationUrl + this.codeApplication + '/notes/', note)
+        // tslint:disable-next-line:no-shadowed-variable
+        .subscribe (() =>
+          this.loadApplication(this.codeApplication)
+        );
+    } else {
+      console.log('update');
+      return this.api.put(this.applicationUrl + this.codeApplication + '/notes/' + note.noteTitle, note);
+    }
+
   }
 
 
