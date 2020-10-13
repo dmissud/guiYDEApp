@@ -31,12 +31,12 @@ export class UserService {
   }
 
   deleteUsers(selectedUsers: User[]): void {
-
-    for (let i = 0; i < selectedUsers.length; i++) {
-      const selectedUser: User = selectedUsers[i];
+    for (const selectedUser of selectedUsers) {
       this.api.delete(this.UseCaseUserUrl + selectedUser.uid)
-        .subscribe(() => this.getUsers());
-      console.log('URL : ', this.UseCaseUserUrl + selectedUser.uid);
+        .subscribe(() => {
+          this.getUsers();
+          this.messageService.notify('success', 'Successful', 'Utilisateur' + selectedUser + ' supprimé');
+        });
     }
   }
 
@@ -47,30 +47,27 @@ export class UserService {
         lastName: user.lastName,
         roles: user.roles
       };
-      console.log('update in IUser', iuser);
       this.api.put(this.UseCaseUserUrl + user.uid, iuser)
         .subscribe(() => {
-          this.messageService.notify('success', 'Successful', 'User Updated');
+          this.messageService.notify('success', 'Successful', 'Utilisateur mis à jour');
           this.getUsers();
         });
     }
   }
 
   add(user: User): void {
-    let lstUser: User[] = this.usersBehaviorSubject.getValue();
-    lstUser = [user, ...lstUser];
-    console.log('Création en cours', user.uid);
-    this.api.post(this.getUsersUrl, user).subscribe(() => this.getUsers());
-    this.messageService.notify('success', 'Successful', 'User created');
-    this.usersBehaviorSubject.next(lstUser);
+    const iuser: IUser = {
+      uid: user.uid,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      password: '',
+      roles: user.roles
+    };
+    this.api.post(this.getUsersUrl, iuser).subscribe(() => {
+      this.messageService.notify('success', 'Successful', 'Utilisateur créé');
+      this.getUsers();
+    });
   }
 
-  createId(): string {
-    let id = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-  }
+
 }

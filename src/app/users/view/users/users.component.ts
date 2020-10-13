@@ -67,7 +67,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       accept: () => {
         this.userService.deleteUsers(this.selectedUsers);
         this.selectedUsers = null;
-        this.messageService.notify('success', 'Successful', 'Users Deleted');
       }
     });
   }
@@ -92,17 +91,12 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.submitted = true;
     this.userService.add(this.user);
     this.userDialog = false;
-    this.user = new User('', '', '',  []);
+    // this.user = new User('', '', '',  []);
   }
 
   updateUser(): void {
-    console.log('save User : ', this.user.roles);
-    this.user.isAdmin = true;
-    this.user.isAdmin = false;
-    console.log('save User : ', this.user.roles);
     this.submitted = true;
     this.userService.update(this.user);
     this.userMajDialog = false;
-    // this.user = new User('', '', '', 'YDE_user', []);
   }
 }
