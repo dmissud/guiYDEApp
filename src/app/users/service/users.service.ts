@@ -3,6 +3,8 @@ import {User} from '../model/user';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {NotificationService} from '../../main/service/notification.service';
+import {map} from 'rxjs/operators';
+import {ApiService} from '../../main/service/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,10 @@ export class UserService {
   private usersBehaviorSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   usersObservable: Observable<User[]> = this.usersBehaviorSubject.asObservable();
 
-  constructor(private http: HttpClient, private messageService: NotificationService) {
+  private getUsersUrl = '/users';
+  private deleteUserUrl = '/users/';
+
+  constructor(private http: HttpClient, private api: ApiService, private messageService: NotificationService) {
   }
 
   /*getUsersSmall(): any {
@@ -24,19 +29,22 @@ export class UserService {
       .then(data => data);
   }*/
 
-  getUsers(): Promise<User[]> {
-    return this.http.get<any>('assets/users.json')
-      .toPromise()
-      .then(res => {
-        this.usersBehaviorSubject.next(res.data);
-        console.log(res.data);
-        return res.data as User[];
-      });
+  getUsers(): void {
+    this.api.get(this.getUsersUrl)
+      .pipe(map((response: any) => {
+        return response as User[];
+      }))
+      .subscribe(lstUserHttp => this.usersBehaviorSubject.next(lstUserHttp));
   }
 
   deleteUsers(selectedUsers: User[]): void {
-    this.usersBehaviorSubject.next(
-      this.usersBehaviorSubject.getValue().filter(val => !selectedUsers.includes(val)));
+
+    for (let i = 0; i < selectedUsers.length; i++) {
+      const selectedUser: User = selectedUsers[i];
+      this.api.delete(this.deleteUserUrl + selectedUser.uid)
+        .subscribe(() => this.getUsers());
+      console.log('URL : ', this.deleteUserUrl + selectedUser.uid);
+    }
   }
 
   addOrUpdate(user: User): void {

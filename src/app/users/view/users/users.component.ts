@@ -43,6 +43,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       }
     });
     this.userService.getUsers();
+    // let datas: User[] = this.userService.getUsers() ;
+    // console.log('Récupération des datas : ', datas);
 
   }
 

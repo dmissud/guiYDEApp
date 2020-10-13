@@ -30,7 +30,7 @@
       "uid": "100004",
       "lastName": "Labavure",
       "firstName": "Inspecteur",
-      "roles": ["ROLE_USERs", "ROLE_ADMIN"]
+      "roles": ["ROLE_USER", "ROLE_ADMIN"]
 
     },
     {
