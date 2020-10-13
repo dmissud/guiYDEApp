@@ -26,6 +26,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TooltipModule} from 'primeng/tooltip';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 
@@ -59,7 +60,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     MessageModule,
     FileUploadModule,
     TooltipModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ProgressSpinnerModule
   ],
   exports: [
     RippleModule,
@@ -88,7 +90,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     MessageModule,
     FileUploadModule,
     TooltipModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ProgressSpinnerModule
   ],
   providers: [MessageService, ConfirmationService]
 })

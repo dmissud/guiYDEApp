@@ -3,6 +3,7 @@ import {MenuItem} from 'primeng/api';
 import {Observable, Subscription} from 'rxjs';
 import {AuthService} from '../../service/auth.service';
 import {Auth} from '../../model/Auth';
+import {LoaderService} from '../../service/loader.service';
 
 @Component({
   selector: 'app-topbar',
@@ -14,12 +15,15 @@ export class TopbarComponent implements OnInit, OnDestroy {
   display: boolean;
   auth$: Observable<Auth>;
   uid: string;
+  isLoading$: Observable<boolean>;
   private applicationItems: MenuItem;
   private usersItems: MenuItem;
   private adminItems: MenuItem;
   private userSubsciption: Subscription;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private loaderService: LoaderService) {
+    this.isLoading$ = loaderService.isLoading;
   }
 
   ngOnInit(): void {
@@ -34,6 +38,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubsciption.unsubscribe();
+  }
+
+  onDismiss($event: boolean): void {
+    this.display = $event;
   }
 
   private buildGeneralMenu(withAdminTools: boolean): void {
@@ -92,9 +100,5 @@ export class TopbarComponent implements OnInit, OnDestroy {
         }
       ]
     };
-  }
-
-  onDismiss($event: boolean): void {
-    this.display = $event;
   }
 }

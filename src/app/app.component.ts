@@ -11,7 +11,8 @@ export class AppComponent implements OnInit {
 
   display: boolean;
 
-  constructor(private messageService: MessageService, private primengConfig: PrimeNGConfig) {
+  constructor(private messageService: MessageService,
+              private primengConfig: PrimeNGConfig) {
     this.display = true;
   }
 

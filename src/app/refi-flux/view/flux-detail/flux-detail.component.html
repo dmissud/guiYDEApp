@@ -1,1 +1,79 @@
-<p>flux-detail works!</p>
+<div class="p-card">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h3 class="p-m-3">Information du Flux</h3>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <p-progressSpinner *ngIf="fluxLoader$ | async" [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                         strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+      <button *ngIf="!(fluxLoader$ | async)" pButton pRipple icon="pi pi-times" class="p-button-icon" (click)="stopShowDetail()"></button>
+    </ng-template>
+  </p-toolbar>
+  <div class="p-fluid p-formgrid p-grid p-p-2">
+    <diV class="p-grid p-p-2">
+      <div class="p-field p-col-12 p-md-4">
+        <label for="originalName">Fichier chargé</label>
+        <input id="originalName" type="text" pInputText [disabled]="true" [value]="(fluxRefi$ | async).originalName">
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label for="createDate">le :</label>
+        <input id="createDate" type="text" pInputText [disabled]="true"
+               [value]="(fluxRefi$ | async).createDate | date: 'd/MM/yy à HH:mm'">
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label for="fluxState">Statut de l'importation</label>
+        <input id="fluxState" type="text" pInputText [disabled]="true" [value]="(fluxRefi$ | async).fluxState">
+      </div>
+    </diV>
+    <diV class="p-grid p-p-2">
+      <div class="p-field p-col-12 p-md-4">
+        <label for="jobStatus">Statut du Batch</label>
+        <input id="jobStatus" type="text" pInputText [disabled]="true" [value]="(fluxRefi$ | async).job.jobStatus">
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label for="existStatus">Code de fin</label>
+        <input id="existStatus" type="text" pInputText [disabled]="true" [value]="(fluxRefi$ | async).job.existStatus">
+      </div>
+    </diV>
+    <div class="p-grid p-p-2">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="startDate">Date de début du Batch</label>
+        <input id="startDate" type="text" pInputText [disabled]="true"
+               [value]="(fluxRefi$ | async).job.startDate | date: 'd/MM/yy à HH:mm'">
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label for="duration">Durée (en secondes)</label>
+        <input id="duration" type="text" pInputText [disabled]="true" [value]="(fluxRefi$ | async).job.duration">
+      </div>
+    </div>
+    <div class="p-grid p-p-2 p-col">
+      <p-toolbar class="p-col">
+        Applications :
+      </p-toolbar>
+    </div>
+    <div class="p-grid p-p-2">
+      <div class="p-field p-col-12 p-md-3">
+        <label for="referenceCounter">Référencée</label>
+        <input id="referenceCounter" type="text" pInputText [disabled]="true"
+               [value]="(fluxRefi$ | async).statUpdateApplication.referenceCounter">
+      </div>
+      <div class="p-field p-col-12 p-md-3">
+        <label for="updateCounter">Mise à jour</label>
+        <input id="updateCounter" type="text" pInputText [disabled]="true"
+               [value]="(fluxRefi$ | async).statUpdateApplication.updateCounter">
+      </div>
+      <div class="p-field p-col-12 p-md-3">
+        <label for="ignoreCounter">Ignorée</label>
+        <input id="ignoreCounter" type="text" pInputText [disabled]="true"
+               [value]="(fluxRefi$ | async).statUpdateApplication.ignoreCounter">
+      </div>
+      <div class="p-field p-col-12 p-md-3">
+        <label for="noMoreUpdated">Pas mise à jour</label>
+        <input id="noMoreUpdated" type="text" pInputText [disabled]="true"
+               [value]="(fluxRefi$ | async).statUpdateApplication.noMoreUpdated">
+      </div>
+    </div>
+  </div>
+</div>

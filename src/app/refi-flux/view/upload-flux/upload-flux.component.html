@@ -1,10 +1,21 @@
-<div class="p-text-center"><br/><h4>Chargement d'un nouveau Flux en provenance du REFi</h4></div>
-<p-fileUpload name="fluxRefi" [url]="url" (onUpload)="onUpload($event)"
-              multiple="single"  maxFileSize="10000000" fileLimit="1" [headers]="httpHeaders">
-  <ng-template pTemplate="content">
-    <ul *ngIf="uploadedFiles.length">
-      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-    </ul>
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+  <ng-template pTemplate="left">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      <h3 class="p-m-3">Chargement d'un nouveau Flux</h3>
+    </div>
   </ng-template>
-</p-fileUpload>
-
+    <ng-template pTemplate="right">
+      <button pButton pRipple  icon="pi pi-times" class="p-button-icon" (click)="stopLoadRefi()"></button>
+    </ng-template>
+  </p-toolbar>
+  <p-fileUpload name="fluxRefi" [url]="url" customUpload="true" (uploadHandler)="onUpload($event)"
+                multiple="single" maxFileSize="10000000" fileLimit="1" [headers]="httpHeaders"
+                >
+    <ng-template pTemplate="content">
+      <ul *ngIf="uploadedFiles.length">
+        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+      </ul>
+    </ng-template>
+  </p-fileUpload>
+</div>

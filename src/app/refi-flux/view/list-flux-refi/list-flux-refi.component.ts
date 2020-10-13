@@ -1,5 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FluxRefi} from '../../model/flux-refi';
+import {RefiService} from '../../service/refi.service';
+import {Observable} from 'rxjs';
+import {ConfirmationService} from 'primeng/api';
+import {NotificationService} from '../../../main/service/notification.service';
 
 @Component({
   selector: 'app-list-flux-refi',
@@ -7,68 +11,26 @@ import {FluxRefi} from '../../model/flux-refi';
   styleUrls: ['./list-flux-refi.component.scss']
 })
 export class ListFluxRefiComponent implements OnInit {
-  allFlux: FluxRefi[];
-  selectedFlux: FluxRefi;
+  @Output() newFlux = new EventEmitter<boolean>();
+  @Output() showDetail = new EventEmitter<boolean>();
+  @Input() askForNewFlux: boolean;
 
-  constructor() {
-    this.allFlux = [
-      {
-        fluxId: 5,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-10T23:17:06.512'
-      },
-      {
-        fluxId: 3,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-10T23:13:08.353'
-      },
-      {
-        fluxId: 1,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-10T18:24:16.165'
-      },
-      {
-        fluxId: 4,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-10T23:13:25.456'
-      },
-      {
-        fluxId: 6,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-10T23:17:52.542'
-      },
-      {
-        fluxId: 2,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-10T22:35:54.015'
-      },
-      {
-        fluxId: 7,
-        originalName: 'creation_light.csv',
-        fluxState: 'COMPLETED',
-        jobStatus: 'COMPLETED',
-        createDate: '2020-10-11T09:15:34.054'
-      }
-    ];
+  allFlux$: Observable<FluxRefi[]>;
+  selectedFlux: FluxRefi[];
+
+  constructor(private refiService: RefiService,
+              private confirmationService: ConfirmationService,
+              private messageService: NotificationService) {
+    this.allFlux$ = this.refiService.lstFluxObservable;
   }
 
   ngOnInit(): void {
+    this.refiService.loadAllRefiFlux();
   }
 
-  selectProduct(flux: any): void {
-
+  selectFlux(flux: FluxRefi): void {
+    this.refiService.loadRefiFlux(flux.fluxId);
+    this.showDetail.emit(true);
   }
 
   onRowSelect($event: any): void {
@@ -77,5 +39,26 @@ export class ListFluxRefiComponent implements OnInit {
 
   onRowUnselect($event: any): void {
 
+  }
+
+  deleteSelectedFlux(): void {
+
+  }
+
+  openNew(): void {
+    this.newFlux.emit(true);
+  }
+
+  deleteSelectedUsers(): void {
+    this.confirmationService.confirm({
+      message: 'Confirmez-vous la suppression de ' + this.selectedFlux.length + ' utilisateur(s) ?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.refiService.deleteFluxrefi(this.selectedFlux);
+        this.selectedFlux = null;
+        this.messageService.notify('success', 'Successful', 'Users Deleted');
+      }
+    });
   }
 }

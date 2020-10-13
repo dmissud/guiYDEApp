@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {Auth} from '../../../main/model/Auth';
 import {NotificationService} from '../../../main/service/notification.service';
+import {RefiService} from '../../service/refi.service';
 
 @Component({
   selector: 'app-refi-flux',
@@ -13,14 +14,27 @@ import {NotificationService} from '../../../main/service/notification.service';
 export class RefiFluxComponent implements OnInit, OnDestroy {
 
   auth: Observable<Auth>;
+  loadRefiActivated: boolean;
+  showDetail: boolean;
+  fluxLoader$: Observable<boolean>;
   private authSubsciption: Subscription;
+  private fluxRefiSubsciption: Subscription;
 
   constructor(private router: Router,
               private authService: AuthService,
+              private fluxRefiService: RefiService,
               private messageService: NotificationService) {
   }
 
   ngOnInit(): void {
+    this.dismissDetail();
+    this.dismissNewFlux();
+
+    this.checkAccesValide.call(this);
+    this.piloteAffichageOnLoad();
+  }
+
+  private checkAccesValide(): void {
     this.auth = this.authService.userLogged;
     this.authSubsciption = this.auth.subscribe(() => {
       if (!this.authService.userIsAdmin) {
@@ -30,8 +44,36 @@ export class RefiFluxComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.authSubsciption.unsubscribe();
+  private piloteAffichageOnLoad(): void {
+    this.fluxLoader$ = this.fluxRefiService.isLoading;
+    this.fluxRefiSubsciption = this.fluxLoader$.subscribe(
+      show => {
+        if (show) {
+          this.dismissNewFlux();
+          this.activateDetail();
+        }
+      }
+    );
   }
 
+  ngOnDestroy(): void {
+    this.authSubsciption.unsubscribe();
+    this.fluxRefiSubsciption.unsubscribe();
+  }
+
+  activateNewFlux(): void {
+    this.loadRefiActivated = true;
+  }
+
+  dismissNewFlux(): void {
+    this.loadRefiActivated = false;
+  }
+
+  activateDetail(): void {
+    this.showDetail = true;
+  }
+
+  dismissDetail(): void {
+    this.showDetail = false;
+  }
 }
