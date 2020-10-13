@@ -89,10 +89,47 @@
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="userMajDialog" [style]="{width: '450px'}" header="Mise à jour utilisateur" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="lastNameMaj">Nom</label>
+      <input type="text" pInputText id="lastNameMaj" [(ngModel)]="user.lastName" required autofocus />
+      <small class="p-invalid" *ngIf="submitted && !user.lastName">Le nom est obligatoire.</small>
+    </div>
+    <div class="p-field">
+      <label for="firstNameMaj">Prénom</label>
+      <input type="text" pInputText id="firstNameMaj" [(ngModel)]="user.firstName" required/>
+      <small class="p-invalid" *ngIf="submitted && !user.firstName">Le prénom est obligatoire.</small>
+    </div>
+    <div class="p-field">
+      <label for="uidMaj">UID</label>
+      <input type="text" pInputText id="uidMaj" [(ngModel)]="user.uid" [disabled]="true" />
+    </div>
+
+    <div class="p-field">
+      <label class="p-mb-3">Roles</label>
+      <div class="p-formgrid p-grid">
+        <div class="p-field-radiobutton p-col-6">
+          <p-inputSwitch id="roleAdminMaj" name="admin" [(ngModel)]="user.isAdmin"></p-inputSwitch>
+          <label for="roleAdminMaj">Administrateur</label>
+        </div>
+        <div class="p-field-radiobutton p-col-6">
+          <p-inputSwitch id="roleUserMaj" name="user" [(ngModel)]="user.isUser"></p-inputSwitch>
+          <label for="roleUserMaj">Utilisateur</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogMaj()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateUser()"></button>
   </ng-template>
 </p-dialog>
 

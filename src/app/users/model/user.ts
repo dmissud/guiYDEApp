@@ -20,10 +20,12 @@ export class User {
   set isAdmin(admin: boolean) {
     if (admin) {
       if (!this.roles.includes('ROLE_ADMIN')) {
+        console.log('isAdmin add');
         this.roles = ['ROLE_ADMIN', ...this.roles];
       }
     } else {
       if (this.roles.includes('ROLE_ADMIN')) {
+        console.log('isAdmin remove');
         this.roles.splice(this.roles.indexOf('ROLE_ADMIN'), 1);
       }
     }
@@ -34,10 +36,12 @@ export class User {
   set isUser(user: boolean) {
     if (user) {
       if (!this.roles.includes('ROLE_USER')) {
+        console.log('isUser  add');
         this.roles = ['ROLE_USER', ...this.roles];
       }
     } else {
       if (this.roles.includes('ROLE_USER')) {
+        console.log('isUser  remove');
         this.roles.splice(this.roles.indexOf('ROLE_USER'), 1);
       }
     }

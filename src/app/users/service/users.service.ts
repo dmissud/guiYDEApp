@@ -22,13 +22,6 @@ export class UserService {
   constructor(private http: HttpClient, private api: ApiService, private messageService: NotificationService) {
   }
 
-  /*getUsersSmall(): any {
-    return this.http.get<any>('assets/users-small.json')
-      .toPromise()
-      .then(res => res.data as User[])
-      .then(data => data);
-  }*/
-
   getUsers(): void {
     this.api.get(this.getUsersUrl)
       .pipe(map((response: any) => {
@@ -52,10 +45,6 @@ export class UserService {
 
     const index = this.findIndexByUid(lstUser, user.uid);
     if (user.lastName.trim()) {
-      console.log('user.uid = ', user.uid);
-      console.log('index = ', index);
-      console.log('lstUser = ', lstUser[index]);
-
       lstUser[this.findIndexByUid(lstUser, user.uid)] = user;
       this.api.put(this.UseCaseUserUrl + user.uid, {
         firstName: user.firstName, lastName: user.lastName,

@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
 
   userDialog: boolean;
+  userMajDialog: boolean;
 
   users: User[];
   users$: Observable<User[]>;
@@ -73,7 +74,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   editUser(user: User): void {
     this.user = user;
-    this.userDialog = true;
+    this.userMajDialog = true;
+  }
+
+  hideDialogMaj(): void {
+    this.userMajDialog = false;
+    this.submitted = false;
   }
 
   hideDialog(): void {
@@ -82,6 +88,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   saveUser(): void {
+    console.log('save User : ', this.user);
     this.submitted = true;
     this.user.password = 'YDE_user';
     this.userService.add(this.user);
@@ -90,9 +97,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   updateUser(): void {
+    console.log('save User : ', this.user.roles);
+    this.user.isAdmin = true;
+    this.user.isAdmin = false;
+    console.log('save User : ', this.user.roles);
     this.submitted = true;
+    this.user.password = 'YDE_user';
     this.userService.update(this.user);
-    this.userDialog = false;
-    this.user = new User('', '', '', 'YDE_user', []);
+    this.userMajDialog = false;
+    // this.user = new User('', '', '', 'YDE_user', []);
   }
 }
