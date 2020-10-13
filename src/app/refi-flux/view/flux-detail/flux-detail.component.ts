@@ -25,6 +25,6 @@ export class FluxDetailComponent implements OnInit {
   }
 
   stopShowDetail(): void {
-    this.dismiss.emit(true);
+    this.dismiss.emit(false);
   }
 }

@@ -1,46 +1,55 @@
 <div class="card">
+  <div class="card">
 
-  <p-toolbar styleClass="p-mb-4">
-    <ng-template pTemplate="left">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        <h3 class="p-m-0">Liste Flux REFi importé(s)</h3>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="right">
-      <button *ngIf="askForNewFlux" pButton pRipple label="Nouveau Flux" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()" ></button>
-      <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedFlux()" [disabled]="!selectedFlux || !selectedFlux.length"></button>
-    </ng-template>
-  </p-toolbar>
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h3 class="p-m-0">Liste Flux REFi importé(s)</h3>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button *ngIf="askForNewFlux" pButton pRipple label="Nouveau Flux" icon="pi pi-plus"
+                class="p-button-success p-mr-2" (click)="openNew()"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-danger" [disabled]="selectedFlux === null" (click)="deleteSelectedFlux($event)"
+                ></button>
+      </ng-template>
+    </p-toolbar>
 
-  <p-table [value]="allFlux$ | async" [(selection)]="selectedFlux" dataKey="fluxId"
-           [rows]="10" [paginator]="true" styleClass="p-datatable-lg" [rowHover]="true"
-           currentPageReportTemplate="Flux {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true">
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
-        <th pSortableColumn="createDate">Date création <p-sortIcon field="createDate"></p-sortIcon></th>
-        <th pSortableColumn="originalName">File Up Load <p-sortIcon field="originalName"></p-sortIcon></th>
-        <th pSortableColumn="fluxState">Statut du Flux <p-sortIcon field="fluxState"></p-sortIcon></th>
-        <th pSortableColumn="jobStatus">Statut du Job <p-sortIcon field="jobStatus"></p-sortIcon></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-flux>
-      <tr [pSelectableRow]="flux">
-        <td>
-          <p-tableCheckbox [value]="flux"></p-tableCheckbox>
-        </td>
-        <td>{{flux.createDate | date: 'd/MM/yy à HH:mm'}}</td>
-        <td>{{flux.originalName}}</td>
-        <td>{{flux.fluxState}}</td>
-        <td>{{flux.jobStatus}}</td>
-        <td>
-          <button type="button" pButton pRipple icon="pi pi-search" class="p-button-rounded p-mr-2" (click)="selectFlux(flux)"></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <p-table [value]="allFlux$ | async" [(selection)]="selectedFlux" dataKey="fluxId"
+             [rows]="10" [paginator]="true" styleClass="p-datatable-lg" [rowHover]="true"
+             currentPageReportTemplate="Flux {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true"
+             selectionMode="single"
+             (onRowUnselect)="onRowUnselect($event)"
+             (onRowSelect)="onRowSelect($event)">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="createDate">Date création
+            <p-sortIcon field="createDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="originalName">File Up Load
+            <p-sortIcon field="originalName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fluxState">Statut du Flux
+            <p-sortIcon field="fluxState"></p-sortIcon>
+          </th>
+          <th pSortableColumn="jobStatus">Statut du Job
+            <p-sortIcon field="jobStatus"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-flux>
+        <tr [pSelectableRow]="flux">
+          <td>{{flux.createDate | date: 'd/MM/yy à HH:mm'}}</td>
+          <td>{{flux.originalName}}</td>
+          <td>{{flux.fluxState}}</td>
+          <td>{{flux.jobStatus}}</td>
+          <!--        <td>-->
+          <!--          <button type="button" pButton pRipple icon="pi pi-search" class="p-button-rounded p-mr-2" (click)="selectFlux(flux)"></button>-->
+          <!--        </td>-->
+        </tr>
+      </ng-template>
+    </p-table>
 
+  </div>
 </div>
-
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

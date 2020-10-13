@@ -2,20 +2,20 @@
   <div class="p-col">
     <div class="box p-shadow-2">
       <app-list-flux-refi [askForNewFlux]="!loadRefiActivated"
-                          (newFlux)="activateNewFlux()"
-                          (showDetail)="activateDetail()"></app-list-flux-refi>
+                          (newFlux)="driveNewFlux($event)"
+                          (showDetail)="driveDetail($event)"></app-list-flux-refi>
     </div>
   </div>
   <div *ngIf="loadRefiActivated || showDetail" class="p-col-4">
     <div class="p-grid p-flex-column">
       <div *ngIf="loadRefiActivated" class="p-col">
         <div class="box p-shadow-2">
-          <app-upload-flux (dismiss)="dismissNewFlux()"></app-upload-flux>
+          <app-upload-flux (dismiss)="driveNewFlux($event)"></app-upload-flux>
         </div>
       </div>
       <div *ngIf="showDetail" class="p-col">
         <div class="box p-shadow-2">
-          <app-flux-detail (dismiss)="dismissDetail()"></app-flux-detail>
+          <app-flux-detail (dismiss)="driveDetail($event)"></app-flux-detail>
         </div>
       </div>
     </div>

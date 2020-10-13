@@ -5,6 +5,7 @@ import {ApiService} from '../../main/service/api.service';
 import {map} from 'rxjs/operators';
 import {HttpResponse} from '@angular/common/http';
 import {FluxRefiDetail} from '../model/flux-refi-detail';
+import {NotificationService} from '../../main/service/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class RefiService {
   readonly isLoading: Observable<boolean> = this.isLoadingSubject.asObservable();
   private numberOfRequest: number;
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService,
+              private messageService: NotificationService) {
     this.numberOfRequest = 0;
   }
 
@@ -73,8 +75,16 @@ export class RefiService {
       });
   }
 
-  deleteFluxrefi(selectedFlux: FluxRefi[]): void {
+  deleteFluxrefi(selectedFlux: FluxRefi): void {
+    this.api.delete(this.fluxRefiUrl + '/' + selectedFlux.fluxId)
+      .subscribe(() => {
+        this.messageService.notify('success', 'Successful', 'Flux du ' + selectedFlux.createDate + ' supprimé');
+        this.loadAllRefiFlux();
+      });
+  }
 
+  unSelectFlux(): void {
+    this.fluxSuject.next(RefiService.buildDummyFlux());
   }
 
   private supervise(location: string): void {

@@ -27,8 +27,8 @@ export class RefiFluxComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dismissDetail();
-    this.dismissNewFlux();
+    this.driveDetail(false);
+    this.driveNewFlux(false);
 
     this.checkAccesValide.call(this);
     this.piloteAffichageOnLoad();
@@ -49,8 +49,8 @@ export class RefiFluxComponent implements OnInit, OnDestroy {
     this.fluxRefiSubsciption = this.fluxLoader$.subscribe(
       show => {
         if (show) {
-          this.dismissNewFlux();
-          this.activateDetail();
+          this.driveNewFlux(false);
+          this.driveDetail(true);
         }
       }
     );
@@ -61,19 +61,11 @@ export class RefiFluxComponent implements OnInit, OnDestroy {
     this.fluxRefiSubsciption.unsubscribe();
   }
 
-  activateNewFlux(): void {
-    this.loadRefiActivated = true;
+  driveDetail($event: boolean): void {
+    this.showDetail = $event;
   }
 
-  dismissNewFlux(): void {
-    this.loadRefiActivated = false;
-  }
-
-  activateDetail(): void {
-    this.showDetail = true;
-  }
-
-  dismissDetail(): void {
-    this.showDetail = false;
+  driveNewFlux($event: boolean): void {
+    this.loadRefiActivated = $event;
   }
 }

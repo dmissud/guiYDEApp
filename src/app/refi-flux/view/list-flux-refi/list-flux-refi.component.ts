@@ -16,7 +16,7 @@ export class ListFluxRefiComponent implements OnInit {
   @Input() askForNewFlux: boolean;
 
   allFlux$: Observable<FluxRefi[]>;
-  selectedFlux: FluxRefi[];
+  selectedFlux: FluxRefi;
 
   constructor(private refiService: RefiService,
               private confirmationService: ConfirmationService,
@@ -26,38 +26,33 @@ export class ListFluxRefiComponent implements OnInit {
 
   ngOnInit(): void {
     this.refiService.loadAllRefiFlux();
-  }
-
-  selectFlux(flux: FluxRefi): void {
-    this.refiService.loadRefiFlux(flux.fluxId);
-    this.showDetail.emit(true);
+    this.selectedFlux = null;
   }
 
   onRowSelect($event: any): void {
-
+    this.refiService.loadRefiFlux($event.data.fluxId);
+    this.showDetail.emit(true);
+    console.log(this.selectedFlux);
   }
 
   onRowUnselect($event: any): void {
-
-  }
-
-  deleteSelectedFlux(): void {
-
+    this.refiService.unSelectFlux();
+    this.showDetail.emit(false);
   }
 
   openNew(): void {
     this.newFlux.emit(true);
   }
 
-  deleteSelectedUsers(): void {
+  deleteSelectedFlux($event: MouseEvent): void {
     this.confirmationService.confirm({
-      message: 'Confirmez-vous la suppression de ' + this.selectedFlux.length + ' utilisateur(s) ?',
+      message: 'Confirmez-vous la suppression du flux du ' + this.selectedFlux.createDate + ' ?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.refiService.deleteFluxrefi(this.selectedFlux);
         this.selectedFlux = null;
-        this.messageService.notify('success', 'Successful', 'Users Deleted');
+        this.messageService.notify('success', 'Successful', 'Flux supprimé(s)');
       }
     });
   }
