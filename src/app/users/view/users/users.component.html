@@ -20,16 +20,16 @@
   </p-toolbar>
 
   <p-table #dt [value]="(users$ | async)" [rows]="10" [paginator]="true" styleClass="p-datatable-lg" [globalFilterFields]="['lastName','uid','admin','user']"
-           [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
+           [(selection)]="selectedUsers" [rowHover]="true" dataKey="uid"
            currentPageReportTemplate="Utilisateurs {first} à {last} sur {totalRecords}" [showCurrentPageReport]="true">
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
+        <th pSortableColumn="uid">UID <p-sortIcon field="uid"></p-sortIcon></th>
         <th pSortableColumn="lastName">Nom <p-sortIcon field="lastName"></p-sortIcon></th>
         <th pSortableColumn="firstName">Prénom <p-sortIcon field="firstName"></p-sortIcon></th>
-        <th pSortableColumn="uid">UID <p-sortIcon field="uid"></p-sortIcon></th>
         <th>Role Admin</th>
         <th>Role User</th>
       </tr>
@@ -39,9 +39,9 @@
           <td>
             <p-tableCheckbox [value]="user"></p-tableCheckbox>
           </td>
+          <td>{{ user.uid }}</td>
           <td>{{ user.lastName }}</td>
           <td>{{ user.firstName }}</td>
-          <td>{{ user.uid }}</td>
           <td><p-inputSwitch [(ngModel)]="user.isAdmin" [disabled]="true"></p-inputSwitch></td>
           <td><p-inputSwitch [(ngModel)]="user.isUser" [disabled]="true"></p-inputSwitch></td>
           <td>

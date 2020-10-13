@@ -34,7 +34,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('User ngOnInit');
     this.auth$ = this.authService.userLogged;
     this.authSubscription = this.auth$.subscribe(() => {
       if (!this.authService.userIsAdmin) {
@@ -54,7 +53,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   openNew(): void {
-    this.user = new User('', '', '', '', []);
+    this.user = new User('', '', '', 'YDE_user', []);
     this.submitted = false;
     this.userDialog = true;
   }
@@ -84,11 +83,16 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   saveUser(): void {
     this.submitted = true;
+    this.user.password = 'YDE_user';
+    this.userService.add(this.user);
+    this.userDialog = false;
+    this.user = new User('', '', '', 'YDE_user', []);
+  }
 
-    if (this.user.lastName.trim()) {
-      this.userService.addOrUpdate(this.user);
-      this.userDialog = false;
-      this.user = new User('', '', '', '', []);
-    }
+  updateUser(): void {
+    this.submitted = true;
+    this.userService.update(this.user);
+    this.userDialog = false;
+    this.user = new User('', '', '', 'YDE_user', []);
   }
 }

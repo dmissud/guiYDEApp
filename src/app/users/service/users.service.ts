@@ -17,7 +17,7 @@ export class UserService {
   usersObservable: Observable<User[]> = this.usersBehaviorSubject.asObservable();
 
   private getUsersUrl = '/users';
-  private deleteUserUrl = '/users/';
+  private UseCaseUserUrl = '/users/';
 
   constructor(private http: HttpClient, private api: ApiService, private messageService: NotificationService) {
   }
@@ -41,32 +41,44 @@ export class UserService {
 
     for (let i = 0; i < selectedUsers.length; i++) {
       const selectedUser: User = selectedUsers[i];
-      this.api.delete(this.deleteUserUrl + selectedUser.uid)
+      this.api.delete(this.UseCaseUserUrl + selectedUser.uid)
         .subscribe(() => this.getUsers());
-      console.log('URL : ', this.deleteUserUrl + selectedUser.uid);
+      console.log('URL : ', this.UseCaseUserUrl + selectedUser.uid);
     }
   }
 
-  addOrUpdate(user: User): void {
-    let lstUser: User[] = this.usersBehaviorSubject.getValue();
+  update(user: User): void {
+    const lstUser: User[] = this.usersBehaviorSubject.getValue();
+
+    const index = this.findIndexByUid(lstUser, user.uid);
     if (user.lastName.trim()) {
-      if (user.id) {
-        lstUser[this.findIndexById(lstUser, user.id)] = user;
-        this.messageService.notify('success', 'Successful', 'User Updated');
-      } else {
-        user.id = this.createId();
-        lstUser = [user, ...lstUser];
-        this.messageService.notify('success', 'Successful', 'User created');
-      }
+      console.log('user.uid = ', user.uid);
+      console.log('index = ', index);
+      console.log('lstUser = ', lstUser[index]);
 
-      this.usersBehaviorSubject.next(lstUser);
+      lstUser[this.findIndexByUid(lstUser, user.uid)] = user;
+      this.api.put(this.UseCaseUserUrl + user.uid, {
+        firstName: user.firstName, lastName: user.lastName,
+        password: user.password, roles: user.roles
+      })
+        .subscribe(() => this.getUsers());
+      this.messageService.notify('success', 'Successful', 'User Updated');
     }
   }
 
-  findIndexById(users: User[], id: string): number {
+  add(user: User): void {
+    let lstUser: User[] = this.usersBehaviorSubject.getValue();
+    lstUser = [user, ...lstUser];
+    console.log('Création en cours', user.uid);
+    this.api.post(this.getUsersUrl, user).subscribe(() => this.getUsers());
+    this.messageService.notify('success', 'Successful', 'User created');
+    this.usersBehaviorSubject.next(lstUser);
+  }
+
+  findIndexByUid(users: User[], uid: string): number {
     let index = -1;
     for (let i = 0; i < users.length; i++) {
-      if (users[i].id === id) {
+      if (users[i].uid === uid) {
         index = i;
         break;
       }
