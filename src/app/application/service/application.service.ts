@@ -3,7 +3,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Application, Criticity, CycleLife, ItSolution, Note, NoteContent, OrganizationIdent, Responsable} from '../model/Application';
 import {map} from 'rxjs/operators';
 import {ApiService} from '../../main/service/api.service';
-import {HttpClient} from '@angular/common/http';
 import {NotificationService} from '../../main/service/notification.service';
 
 
@@ -91,8 +90,10 @@ export class ApplicationService {
       console.log('creation');
       note.noteCreationDate = dateCreate;
       this.api.post(this.applicationUrl + this.codeApplication + '/notes/', note)
-        .subscribe(() =>
-          this.loadApplication(this.codeApplication)
+        .subscribe(() => {
+            this.messageService.notify('success', 'Note', 'Création de la note' + note.noteTitle);
+            this.loadApplication(this.codeApplication);
+          }
         );
     } else {
       console.log('update');
@@ -107,7 +108,7 @@ export class ApplicationService {
   // tslint:disable-next-line:typedef
   deleteNote(note: Note) {
     console.log('delete' + note.noteTitle);
-    this.api.delete(this.applicationUrl + this.codeApplication + '/' + note.noteTitle)
+    this.api.delete(this.applicationUrl + this.codeApplication + '/notes/' + note.noteTitle)
       .subscribe(() => this.loadApplication(this.codeApplication));
   }
 
