@@ -1,36 +1,38 @@
 <div class="card p-mb-5">
 
   <div class="p-grid">
-    <div class="p-col-12 box p-shadow-2 p-m-2">
-      <div class="p-mr-2">Descriptif</div>
-      <div class="p-field p-grid">
-        <label for="codeApplication" class="p-col-fixed" style="width:200px">code application : </label>
-        <div class="p-col">
-          <output id="codeApplication" class="p-outputtext p-component">{{application.codeApplication}}</output>
+    <div class="p-grid p-col-12 p-shadow-2 p-m-2">
+      <div class="p-col p-shadow-2 p-m-2">
+        <div class="p-mr-2">Descriptif</div>
+        <div class="p-field p-grid">
+          <label for="codeApplication" class="p-col-fixed" >code application : </label>
+          <div class="p-col">
+            <output id="codeApplication" class="p-outputtext p-component">{{application.codeApplication}}</output>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label for="shortDescription" class="p-col-fixed" >Libellé court : </label>
+          <div class="p-col">
+            <output id="shortDescription" class="p-outputtext p-component">{{application.shortDescription}}</output>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label for="longDescription" class="p-col-fixed" >Libellé long : </label>
+          <div class="p-col">
+            <output id="longDescription" class="p-outputtext p-component">{{application.longDescription}}</output>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label for="organizationName" class="p-col-fixed" >Organisation : </label>
+          <div class="p-col">
+            <output id="organizationName"
+                    class="p-outputtext p-component">{{application.organizationIdent.name}}</output>
+          </div>
         </div>
       </div>
-      <div class="p-field p-grid">
-        <label for="shortDescription" class="p-col-fixed" style="width:200px">Libellé court : </label>
-        <div class="p-col">
-          <output id="shortDescription" class="p-outputtext p-component">{{application.shortDescription}}</output>
-        </div>
+      <div class="p-col p-shadow-2 p-m-2">
+        <app-personne [personne]="application"></app-personne>
       </div>
-      <div class="p-field p-grid">
-        <label for="longDescription" class="p-col-fixed" style="width:200px">Libellé long : </label>
-        <div class="p-col">
-          <output id="longDescription" class="p-outputtext p-component">{{application.longDescription}}</output>
-        </div>
-      </div>
-      <div class="p-field p-grid">
-        <label for="organizationName" class="p-col-fixed" style="width:200px">Nom de l'organisation : </label>
-        <div class="p-col">
-          <output id="organizationName"
-                  class="p-outputtext p-component">{{application.organizationIdent.name}}</output>
-        </div>
-      </div>
-    </div>
-    <div class="p-col-12 box p-shadow-2 p-m-2">
-      <app-personne [personne]="application"></app-personne>
     </div>
     <div class="p-col-12 box p-shadow-2 p-m-2">
       <p-tabView>
