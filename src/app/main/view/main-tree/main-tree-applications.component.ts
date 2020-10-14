@@ -15,6 +15,7 @@ export class MainTreeApplicationsComponent implements OnInit, OnDestroy {
   selectedRoot: OrganizationDesc;
   roots$: Observable<OrganizationDesc[]>;
   private subscription: Subscription;
+  showApplicationView: boolean;
 
   constructor(private organizationRootService: OrganizationRootService,
               private treeAppicationByOrganizationService: TreeApplicationByOrganizationService) {
@@ -29,6 +30,7 @@ export class MainTreeApplicationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.showApplicationView = true;
     this.modeOrganization = true;
     this.organizationRootService.loadApplicationsRoot();
   }
@@ -38,5 +40,9 @@ export class MainTreeApplicationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+
+  driveShowApplication($event: boolean): void {
+    this.showApplicationView = $event;
   }
 }

@@ -1,6 +1,6 @@
 <div class="p-grid p-ai-md-stretch vertical-container">
   <div class="p-col-12">
-    <p-toolbar>
+    <p-toolbar class="p-m-2">
       <div class="p-toolbar-group-left">
         <p-dropdown [options]="roots$ | async" [(ngModel)]="selectedRoot" optionLabel="name"
                     (onChange)="rootChange()"></p-dropdown>
@@ -9,8 +9,13 @@
         <p-inputSwitch [(ngModel)]="modeOrganization"></p-inputSwitch>
       </div>
     </p-toolbar>
-    <div class="box box-stretched">
-      <app-tree-application-view [horizontal]="modeOrganization"></app-tree-application-view>
+    <div class="p-grid p-m-2">
+      <div class="p-col-8" >
+        <app-tree-application-view (showApplication)="driveShowApplication($event)" [horizontal]="modeOrganization"></app-tree-application-view>
+      </div>
+      <div class="p-col-4">
+        <app-application *ngIf="showApplicationView"></app-application>
+      </div>
     </div>
   </div>
 </div>

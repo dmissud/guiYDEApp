@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TreeApplicationByOrganizationService} from '../../service/tree-application-by-organization.service';
 import {MessageService, TreeNode} from 'primeng/api';
 import {Observable} from 'rxjs';
@@ -15,6 +15,8 @@ import {ApplicationService} from '../../../application/service/application.servi
   providers: [MessageService]
 })
 export class TreeApplicationsViewComponent implements OnInit {
+  @Output() showApplication = new EventEmitter<boolean>();
+
   treeOfApplications$: Observable<TreeNode[]>;
 
   selectedNode: TreeNode;
@@ -41,7 +43,7 @@ export class TreeApplicationsViewComponent implements OnInit {
     } else {
       if ($event.node instanceof ApplicationDesc) {
         this.applicationService.loadApplication($event.node.codeApplication);
-        this.router.navigate(['/application']);
+        this.showApplication.emit(true);
       }
     }
   }

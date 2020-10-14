@@ -26,11 +26,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
 
     this.applicationSubsciption = this.applicationService.applicationObservable.subscribe(response => {
       this.application = response;
-      if ((this.application === null)
-        || (this.application.codeApplication === null)
-        || (!this.application.codeApplication.includes('AP'))) {
-        this.router.navigate(['/']);
-      }
     });
   }
 

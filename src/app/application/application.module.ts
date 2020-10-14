@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {ApplicationComponent} from './view/application/application.component';
-import {ApplicationRoutingModule} from './application-routing.module';
 import {PrimengModule} from '../share/primeng/primeng.module';
 import {CyclelifeComponent} from './view/cyclelife/cyclelife.component';
 import {ItsolutionComponent} from './view/itsolution/itsolution.component';
@@ -16,9 +15,11 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 @NgModule({
   declarations: [ApplicationComponent, CyclelifeComponent, ItsolutionComponent, CriticityComponent,
     PersonneComponent, NotesComponent],
+  exports: [
+    ApplicationComponent
+  ],
   imports: [
     CommonModule,
-    ApplicationRoutingModule,
     PrimengModule,
     FormsModule,
     ConfirmDialogModule

@@ -7,7 +7,6 @@ const routes: Routes = [
   {path: 'tree', component: MainTreeApplicationsComponent},
   {path: 'refi', loadChildren: () => import('./refi-flux/refi-flux.module').then(m => m.RefiFluxModule)},
   {path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule)},
-  {path: 'application', loadChildren: () => import('./application/application.module').then(m => m.ApplicationModule)},
   {path: 'organization', loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule)}
 ];
 

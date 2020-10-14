@@ -17,6 +17,7 @@ import {TokenInterceptor} from './main/service/token.interceptor';
 import {UsersModule} from './users/users.module';
 import {NotificationComponent} from './main/view/notification/notification.component';
 import {LoggingInterceptor} from './main/service/logging.interceptor';
+import {ApplicationModule} from './application/application.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {LoggingInterceptor} from './main/service/logging.interceptor';
     AppRoutingModule,
     PrimengModule,
     RefiFluxModule,
-    UsersModule
+    UsersModule,
+    ApplicationModule
   ],
   declarations: [AppComponent,
     TreeApplicationsViewComponent,
