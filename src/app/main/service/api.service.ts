@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {NotificationService} from './notification.service';
 import {catchError} from 'rxjs/operators';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +13,33 @@ export class ApiService {
   ydeAppUrl = environment.API_YDEAPP_URL;
 
   constructor(private http: HttpClient,
+              private authService: AuthService,
               private notificationService: NotificationService) {
   }
 
+  private static getHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    return headers;
+  }
+
   get(url: string, urlParams?: HttpParams): Observable<any> {
-    return this.http.get(this.ydeAppUrl + url, {headers: this.getHeaders(), params: urlParams})
+    return this.http.get(this.ydeAppUrl + url, {headers: ApiService.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
   post(url: string, body: object, urlParams?: HttpParams): Observable<any> {
-    return this.http.post(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders(), params: urlParams})
+    return this.http.post(this.ydeAppUrl + url, JSON.stringify(body), {headers: ApiService.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
   put(url: string, body: object, urlParams?: HttpParams): Observable<any> {
-    return this.http.put(this.ydeAppUrl + url, JSON.stringify(body), {headers: this.getHeaders(), params: urlParams})
+    return this.http.put(this.ydeAppUrl + url, JSON.stringify(body), {headers: ApiService.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
   delete(url: string, urlParams?: HttpParams): Observable<any> {
-    return this.http.delete(this.ydeAppUrl + url, {headers: this.getHeaders(), params: urlParams})
+    return this.http.delete(this.ydeAppUrl + url, {headers: ApiService.getHeaders(), params: urlParams})
       .pipe(catchError(error => this.handleError(error)));
   }
 
@@ -47,12 +55,6 @@ export class ApiService {
       .pipe(catchError(error => this.handleError(error)));
   }
 
-  private getHeaders(): HttpHeaders {
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/json');
-    return headers;
-  }
-
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -63,10 +65,19 @@ export class ApiService {
         `body was: ${error.error}`);
       console.log(error);
       switch (error.status) {
-        case 404:
-          this.notificationService.notify('error', 'Ressource inconnue', '');
+        case 401:
+          this.notificationService.notify('error', 'Connexion', 'Vous devez vous identifier');
+          this.authService.logout();
           break;
-
+        case 403:
+          this.notificationService.notify('error', 'Droit', 'Vous ne disposez pas des droits suffisant pour cette action');
+          break;
+        case 404:
+          this.notificationService.notify('error', 'Ressource inexistante', '');
+          break;
+        case 500:
+          this.notificationService.notify('error', 'Le serveur est en vacance', 'Revenez plus tard');
+          break;
       }
     }
     // Return an observable with a user-facing error message.

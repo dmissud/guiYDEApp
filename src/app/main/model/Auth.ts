@@ -1,7 +1,7 @@
 export class Auth {
   readonly uid: string;
-  private token: string;
-  private grants: string[];
+  readonly token: string;
+  readonly grants: string[];
 
   constructor(uid: string, token: string, grants: string[]) {
     this.uid = uid;

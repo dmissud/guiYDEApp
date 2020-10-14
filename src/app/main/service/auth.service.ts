@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Auth} from '../model/Auth';
-import {ApiService} from './api.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {NotificationService} from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +12,12 @@ export class AuthService {
 
   private userLoggedSubject: BehaviorSubject<Auth> = new BehaviorSubject<Auth>(new Auth('', '', []));
   public userLogged: Observable<Auth> = this.userLoggedSubject.asObservable();
-  private loginUrl = '/authenticate';
+  private loginUrl = environment.API_YDEAPP_URL + '/authenticate';
 
   private readonly ydeAuth = 'ydeAuth';
 
-  constructor(private api: ApiService) {
+  constructor(private http: HttpClient,
+              private notificationService: NotificationService) {
     const localAuth = localStorage.getItem(this.ydeAuth);
     if (localAuth !== null) {
       const authStr = JSON.parse(localAuth);
@@ -32,11 +35,15 @@ export class AuthService {
   }
 
   login(username: string, password: string): void {
-    this.api.post(this.loginUrl, {username, password})
+    const headers = new HttpHeaders();
+    this.http.post(this.loginUrl, JSON.stringify({username, password}),
+      {headers: headers.append('Content-Type', 'application/json')})
       .subscribe(
-        auth => {
+        (auth: Auth) => {
           this.saveAuth(new Auth(username, auth.token, auth.grants));
-        });
+        },
+        () => this.notificationService.notify('error', 'Connexion',
+          'Impossible de vous connecter. Nom utilisateur et/ou mot de passe incorrect'));
   }
 
   logout(): void {
@@ -57,6 +64,5 @@ export class AuthService {
   getToken(): string {
     return this.userLoggedSubject.value.giveToken();
   }
-
 
 }
