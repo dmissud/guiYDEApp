@@ -37,7 +37,7 @@
 
         <span>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-raised p-button-rounded p-button-sm"
-                (click)="editNote(note)"></button>
+                (click)="editNoteUpdate(note)"></button>
         </span>
         <span>
             <button pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm"
@@ -62,6 +62,26 @@
     <div class="p-field">
       <label for="description">Description</label> <br>
       <textarea id="description" [(ngModel)]="note.noteContent" required rows="5" cols="55"></textarea>
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveNote()"></button>
+  </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="noteDialogUpdate" [style]="{width: '450px'}" header="Modification d'une note" [modal]="true"
+          styleClass="p-fluid">
+  <ng-template pTemplate="content">
+
+    <div class="p-field">
+      <label for="title1">Titre</label>
+      <input type="text" pInputText id="title1" [(ngModel)]="note.noteTitle" required disabled autofocus/>
+    </div>
+    <div class="p-field">
+      <label for="description1">Description</label> <br>
+      <textarea id="description1" [(ngModel)]="note.noteContent" required rows="5" cols="55"></textarea>
     </div>
 
   </ng-template>

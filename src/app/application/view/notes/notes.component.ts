@@ -21,7 +21,7 @@ export class NotesComponent implements OnInit {
 
   note: Note;
   noteDialog: boolean;
-  noteDialogDel: boolean;
+  noteDialogUpdate: boolean;
   submitted: boolean;
 
   constructor(private applicationService: ApplicationService,
@@ -49,6 +49,7 @@ export class NotesComponent implements OnInit {
 
   editNote(note: Note): void {
     this.note = note;
+    this.$noteDisplay = note;
     this.noteDialog = true;
   }
 
@@ -57,9 +58,9 @@ export class NotesComponent implements OnInit {
     this.submitted = false;
   }
 
-  editNotedelete(note: Note): void {
+  editNoteUpdate(note: Note): void {
     this.note = note;
-    this.noteDialogDel = true;
+    this.noteDialogUpdate = true;
   }
 
   saveNote(): void {
@@ -67,6 +68,7 @@ export class NotesComponent implements OnInit {
     console.log('creation en cours' + this.note);
     this.applicationService.createNote(this.note);
     this.noteDialog = false;
+    this.noteDialogUpdate = false;
     const initDate: Date = new Date(0);
     this.note = new Note('', '', initDate);
   }
