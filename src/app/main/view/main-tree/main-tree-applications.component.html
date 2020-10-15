@@ -10,9 +10,10 @@
       </div>
     </p-toolbar>
     <div class="p-grid p-m-2">
-      <div class="p-col-8" >
-        <app-tree-application-view (showApplication)="driveShowApplication($event)" [horizontal]="modeOrganization"></app-tree-application-view>
-      </div>
+      <p-scrollPanel class="p-col-8 p-shadow-2" [style]="{width: '100%', height: '700px'}">
+        <app-tree-application-view (showApplication)="driveShowApplication($event)"
+                                   [horizontal]="modeOrganization"></app-tree-application-view>
+      </p-scrollPanel>
       <div class="p-col-4">
         <app-application *ngIf="showApplicationView"></app-application>
       </div>
