@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Note} from '../../model/Application';
 import {ApplicationService} from '../../service/application.service';
+import {AuthService} from '../../../main/service/auth.service';
+import {NotificationService} from '../../../main/service/notification.service';
+import {ConfirmationService} from 'primeng/api';
 
 
 @Component({
@@ -13,15 +16,18 @@ export class NotesComponent implements OnInit {
   @Input() notes: Note[];
 
   $noteDisplay: Note;
-  $addNote: boolean;
+  selectedNote: Note;
   displayNote: boolean;
-  addNote: boolean;
+
   note: Note;
   noteDialog: boolean;
   noteDialogDel: boolean;
   submitted: boolean;
 
-  constructor(private applicationService: ApplicationService) {
+  constructor(private applicationService: ApplicationService,
+              private authService: AuthService,
+              private messageService: NotificationService,
+              private confirmationService: ConfirmationService) {
 
   }
 
@@ -66,9 +72,19 @@ export class NotesComponent implements OnInit {
   }
 
   deleteNote(note: Note): void {
-    console.log('delete' + this.note + this.note.noteTitle);
-    this.submitted = true;
-    this.applicationService.deleteNote(this.note);
-    this.noteDialog = false;
+    this.note = note;
+    this.confirmationService.confirm({
+      message: 'Confirmez-vous la suppression de la note ' + this.note.noteTitle + ' ?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+  //      this.submitted = true;
+  //      this.noteDialog = false;
+        this.applicationService.deleteNote(this.note);
+        this.note = null;
+        this.messageService.notify('success', 'Successful', 'Note supprimée');
+      }
+    });
+
   }
 }

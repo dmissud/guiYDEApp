@@ -47,7 +47,7 @@
         </p-tabPanel>
       </p-tabView>
     </div>
-    <div class="p-col-12 box p-shadow-2 p-m-2">
+    <div class="p-col-12 box p-shadow-2 p-m-2" *ngIf="application.codeApplication as empty">
       <app-notes [notes]="application.notes"></app-notes>
     </div>
   </div>

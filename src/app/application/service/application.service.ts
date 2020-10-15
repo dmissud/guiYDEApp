@@ -42,8 +42,8 @@ export class ApplicationService {
       notes);
   }
 
-  // tslint:disable-next-line:typedef
-  loadApplication(codeApplication: string) {
+
+  loadApplication(codeApplication: string): void {
 
     this.codeApplication = codeApplication;
     console.log('code app in' + codeApplication);
@@ -55,8 +55,8 @@ export class ApplicationService {
       });
   }
 
-  // tslint:disable-next-line:typedef
-  loadApplicationBidon() {
+
+  loadApplicationBidon(): void {
     const dateb = new Date('01-01-2020');
     const dateup = new Date('01-05-2020');
     const cyclelifeBidon: CycleLife = new CycleLife('active', dateb, dateup, null);
@@ -105,8 +105,8 @@ export class ApplicationService {
     }
   }
 
-  // tslint:disable-next-line:typedef
-  deleteNote(note: Note) {
+
+  deleteNote(note: Note): void {
     console.log('delete' + note.noteTitle);
     this.api.delete(this.applicationUrl + this.codeApplication + '/notes/' + note.noteTitle)
       .subscribe(() => this.loadApplication(this.codeApplication));

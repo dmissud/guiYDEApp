@@ -5,7 +5,7 @@
       <span>
 
         <button pButton pRipple label="Note" icon="pi pi-plus" class="p-button-raised p-button-rounded p-button-sm"
-                (click)="openNew()"></button>
+                 (click)="openNew()"></button>
       </span>
 
     </div>
@@ -41,7 +41,7 @@
         </span>
         <span>
             <button pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm"
-                    (click)="editNotedelete(note)"></button>
+                    [disabled]="note.noteTitle === null" (click)="deleteNote(note)"></button>
          </span>
 
       </td>
@@ -74,26 +74,3 @@
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
 
-<p-dialog [(visible)]="noteDialogDel" [style]="{width: '450px'}" header="Supprimer note" [modal]="true"
-          styleClass="p-fluid">
-  <ng-template pTemplate="content">
-
-    <div class="p-field">
-      <label for="title1">Titre</label>
-      <input type="text" putText id="title1" [(ngModel)]="note.noteTitle" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !note.noteTitle">Le titre est obligatoire.</small>
-    </div>
-    <div class="p-field">
-      <label for="description1">Description</label> <br>
-      <textarea id="description1" [(ngModel)]="note.noteContent" required rows="5" cols="55"></textarea>
-    </div>
-
-  </ng-template>
-
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Delete" icon="pi pi-check" class="p-button-text p-button-danger" (click)="deleteNote(note)"></button>
-  </ng-template>
-</p-dialog>
-
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
