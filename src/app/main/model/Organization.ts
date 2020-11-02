@@ -34,11 +34,16 @@ export class Organization implements TreeNode {
   }
 
   get label(): string {
-    return this.name;
+    const pos: number = this.name.indexOf('-');
+    if (pos < 0) {
+      return this.name;
+    } else {
+      return this.name.slice(0, pos - 1);
+    }
   }
 
   get data(): string {
-    return 'Documents Folder';
+    return this.name;
   }
 
   get children(): TreeNode[] {

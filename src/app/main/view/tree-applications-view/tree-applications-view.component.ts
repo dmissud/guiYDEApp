@@ -35,11 +35,9 @@ export class TreeApplicationsViewComponent implements OnInit {
 
   nodeSelected($event): void {
     if ($event.node instanceof Organization) {
-      if ($event.node.applications.length > 0) {
-        this.notificationService.notify('info',
-          'Information',
-          $event.node.label + ' dispose de ' + $event.node.applications.length + ' application(s)');
-      }
+      this.notificationService.notify('info',
+        'Information',
+        $event.node.data + ' dispose de ' + $event.node.applications.length + ' application(s)');
     } else {
       if ($event.node instanceof ApplicationDesc) {
         this.applicationService.loadApplication($event.node.codeApplication);
