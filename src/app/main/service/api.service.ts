@@ -43,9 +43,9 @@ export class ApiService {
       .pipe(catchError(error => this.handleError(error)));
   }
 
-  uploadFile(url: string, fluxRefi: File, name: string): Observable<any> {
+  uploadFile(url: string, flux: File, name: string): Observable<any> {
     const formData = new FormData();
-    formData.append(name, fluxRefi);
+    formData.append(name, flux);
 
     return this.http.post(this.ydeAppUrl + url, formData,
       {
@@ -65,18 +65,18 @@ export class ApiService {
         `body was: ${error.error}`);
       console.log(error);
       switch (error.status) {
+        case 0:
+          this.notificationService.notify('error', 'Le serveur est en vacance', 'Revenez plus tard');
+          break;
         case 401:
-          this.notificationService.notify('error', 'Connexion', 'Vous devez vous identifier');
+          this.notificationService.notify('error', error.error.code, error.error.message);
           this.authService.logout();
           break;
         case 403:
-          this.notificationService.notify('error', 'Droit', 'Vous ne disposez pas des droits suffisant pour cette action');
-          break;
         case 404:
-          this.notificationService.notify('error', 'Ressource inexistante', '');
-          break;
+        case 409:
         case 500:
-          this.notificationService.notify('error', 'Le serveur est en vacance', 'Revenez plus tard');
+          this.notificationService.notify('error', error.error.code, error.error.message);
           break;
       }
     }

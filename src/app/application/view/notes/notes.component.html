@@ -2,12 +2,10 @@
   <ng-template pTemplate="caption">
     <div class="p-notes p-d-flex p-jc-between">
       Note sur l'application
-      <span>
-
+      <span *ngIf="(auth$ | async).isUser()">
         <button pButton pRipple label="Note" icon="pi pi-plus" class="p-button-raised p-button-rounded p-button-sm"
-                 (click)="openNew()"></button>
+                (click)="openNew()"></button>
       </span>
-
     </div>
   </ng-template>
 
@@ -29,17 +27,17 @@
         <p-button (click)="showNote(note)" icon="pi pi-search"></p-button>
 
         <p-dialog *ngIf="$noteDisplay" header="{{$noteDisplay.noteTitle}}" [(visible)]="displayNote"
-                  [style]="{width: '100vw'}"  [baseZIndex]="100" >
+                  [style]="{width: '100vw'}" [baseZIndex]="100">
           <p>{{$noteDisplay.noteContent}}</p>
 
         </p-dialog>
          </span>
 
-        <span>
+        <span   *ngIf="(auth$ | async).isUser()">
             <button pButton pRipple icon="pi pi-pencil" class="p-button-raised p-button-rounded p-button-sm"
-                (click)="editNoteUpdate(note)"></button>
+                    (click)="editNoteUpdate(note)"></button>
         </span>
-        <span>
+        <span   *ngIf="(auth$ | async).isUser()">
             <button pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm"
                     [disabled]="note.noteTitle === null" (click)="deleteNote(note)"></button>
          </span>

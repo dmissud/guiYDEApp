@@ -12,7 +12,6 @@ import {NotificationService} from '../../main/service/notification.service';
 export class ApplicationService {
 
 
-  // @ts-ignore
   private applicationSubject: BehaviorSubject<Application> = new BehaviorSubject<Application>(ApplicationService.buildApplicationEmpty());
   public applicationObservable: Observable<Application> = this.applicationSubject.asObservable();
   private applicationUrl = '/applications/';

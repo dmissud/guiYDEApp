@@ -30,7 +30,7 @@ export class RefiFluxComponent implements OnInit, OnDestroy {
     this.driveDetail(false);
     this.driveNewFlux(false);
 
-    this.checkAccesValide.call(this);
+    this.checkAccesValide();
     this.piloteAffichageOnLoad();
   }
 

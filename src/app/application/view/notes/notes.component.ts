@@ -4,6 +4,8 @@ import {ApplicationService} from '../../service/application.service';
 import {AuthService} from '../../../main/service/auth.service';
 import {NotificationService} from '../../../main/service/notification.service';
 import {ConfirmationService} from 'primeng/api';
+import {Observable} from 'rxjs';
+import {Auth} from '../../../main/model/Auth';
 
 
 @Component({
@@ -15,6 +17,7 @@ export class NotesComponent implements OnInit {
 
   @Input() notes: Note[];
 
+  auth$: Observable<Auth>;
   $noteDisplay: Note;
   selectedNote: Note;
   displayNote: boolean;
@@ -28,7 +31,7 @@ export class NotesComponent implements OnInit {
               private authService: AuthService,
               private messageService: NotificationService,
               private confirmationService: ConfirmationService) {
-
+    this.auth$ = this.authService.userLogged;
   }
 
   ngOnInit(): void {

@@ -42,7 +42,7 @@ export class UploadFluxComponent implements OnInit {
   }
 
   stopLoadRefi(): void {
-    this.dismiss.emit(true);
+    this.dismiss.emit(false);
   }
 
 

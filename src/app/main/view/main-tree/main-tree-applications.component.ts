@@ -19,6 +19,7 @@ export class MainTreeApplicationsComponent implements OnInit, OnDestroy {
 
   constructor(private organizationRootService: OrganizationRootService,
               private treeAppicationByOrganizationService: TreeApplicationByOrganizationService) {
+    this.showApplicationView = false;
     this.roots$ = this.organizationRootService.organizationRootObservable;
     this.subscription = this.roots$.subscribe(
       lstOfRoot => {
@@ -30,13 +31,13 @@ export class MainTreeApplicationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.showApplicationView = true;
     this.modeOrganization = true;
     this.organizationRootService.loadApplicationsRoot();
   }
 
   rootChange(): void {
     console.log(this.selectedRoot);
+    this.treeAppicationByOrganizationService.loadApplicationsTree(this.selectedRoot.idRefog);
   }
 
   ngOnDestroy(): void {
