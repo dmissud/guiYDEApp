@@ -1,1 +1,14 @@
-<p>organization works!</p>
+<div class="p-grid">
+  <div class="p-col">
+    <div class="box p-shadow-2">
+      <app-list-organization [askForNewOrga]="!loadOrganizationActivated"
+                             (actionOnOrganization)="driveActionOnOrganization($event)"
+                             (showDetail)="driveDetail($event)"></app-list-organization>
+    </div>
+  </div>
+  <div *ngIf="loadOrganizationActivated" class="p-col-4">
+    <div >
+      <app-upload-organization-tree (dismiss)="driveActionOnOrganization($event)"></app-upload-organization-tree>
+    </div>
+  </div>
+</div>
